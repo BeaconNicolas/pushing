@@ -918,6 +918,141 @@ a:hover {
   color: var(--muted);
 }
 
+/* Experience, grouped by company */
+.jobs {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.job {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: 32px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.job-head h3 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.job-meta {
+  margin-top: 6px;
+  color: var(--muted);
+  font: 400 13px/1.5 var(--font-mono);
+}
+
+.roles {
+  display: grid;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.role {
+  position: relative;
+  padding-left: 24px;
+}
+
+/* The vertical line joining roles at the same company */
+.role::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: -30px;
+  width: 2px;
+  background: var(--border);
+}
+
+.role:last-child::before {
+  display: none;
+}
+
+.role::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--muted);
+}
+
+.role.is-current::after {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.role h4 {
+  margin: 0;
+  font: 600 17px/1.35 var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.role-period {
+  margin-top: 2px;
+  color: var(--muted);
+  font: 400 13px/1.5 var(--font-mono);
+}
+
+.role ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.role ul li + li {
+  margin-top: 5px;
+}
+
+/* Certifications */
+.certs {
+  margin: 0;
+  padding: 6px 22px;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.certs li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 14px 0;
+}
+
+.certs li + li {
+  border-top: 1px solid var(--border);
+}
+
+.cert-title {
+  font-weight: 500;
+}
+
+.cert-meta {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.certs .tl-credential {
+  margin-top: 0;
+}
+
 /* Contact */
 .contact {
   display: grid;
@@ -1029,6 +1164,10 @@ a:hover {
   .timeline-wrap {
     grid-template-columns: 1fr;
   }
+  .job {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
   .stats {
     grid-template-columns: 1fr;
   }
@@ -1063,7 +1202,8 @@ a:hover {
     grid-template-columns: 1fr;
   }
   .project,
-  .about-card {
+  .about-card,
+  .job {
     padding: 20px;
   }
   .contact {
@@ -1116,6 +1256,7 @@ a:hover {
   }
   .project,
   .timeline > li,
+  .role,
   .skill-card {
     break-inside: avoid;
     box-shadow: none;

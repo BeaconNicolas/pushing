@@ -143,7 +143,9 @@
     var card = el("article", { className: "project", "data-category": p.category || "" }, [
       el("div", { className: "project-meta" }, [
         el("span", { className: "project-cat", text: p.category || "" }),
-        p.year ? el("span", { className: "project-year", text: p.year }) : null,
+        p.context || p.year
+          ? el("span", { className: "project-year", text: [p.context, p.year].filter(Boolean).join(" · ") })
+          : null,
       ]),
       el("h3", { text: p.title }),
       p.summary ? el("p", { className: "project-summary", text: p.summary }) : null,
@@ -164,19 +166,21 @@
             return el("li", { text: t });
           })
         ),
-        el(
-          "div",
-          { className: "project-links" },
-          (p.links || []).map(function (l) {
-            return el("a", {
-              href: l.url,
-              target: "_blank",
-              rel: "noopener",
-              text: l.label + " ↗",
-              "aria-label": l.label + ": " + p.title + " (opens in a new tab)",
-            });
-          })
-        ),
+        p.links && p.links.length
+          ? el(
+              "div",
+              { className: "project-links" },
+              p.links.map(function (l) {
+                return el("a", {
+                  href: l.url,
+                  target: "_blank",
+                  rel: "noopener",
+                  text: l.label + " ↗",
+                  "aria-label": l.label + ": " + p.title + " (opens in a new tab)",
+                });
+              })
+            )
+          : null,
       ]),
     ]);
     projectGrid.appendChild(card);
@@ -220,26 +224,40 @@
     filters.hidden = true;
   }
 
-  // ---------- Experience & education ----------
+  // ---------- Experience (grouped by company) ----------
   var experience = target("experience");
   (data.experience || []).forEach(function (job) {
     experience.appendChild(
-      el("li", null, [
-        el("span", { className: "tl-period", text: job.period }),
-        el("h4", { text: job.role }),
-        el("p", { className: "tl-org", text: [job.org, job.place].filter(Boolean).join(" · ") }),
-        job.points && job.points.length
-          ? el(
-              "ul",
-              null,
-              job.points.map(function (pt) {
-                return el("li", { text: pt });
-              })
-            )
-          : null,
+      el("li", { className: "job" }, [
+        el("div", { className: "job-head" }, [
+          el("h3", { text: job.org }),
+          el("p", { className: "job-meta", text: [job.place, job.period].filter(Boolean).join(" · ") }),
+        ]),
+        el(
+          "ol",
+          { className: "roles" },
+          (job.roles || []).map(function (role) {
+            var current = /present/i.test(role.period || "");
+            return el("li", { className: "role" + (current ? " is-current" : "") }, [
+              el("h4", { text: role.title }),
+              role.period ? el("p", { className: "role-period", text: role.period }) : null,
+              role.points && role.points.length
+                ? el(
+                    "ul",
+                    null,
+                    role.points.map(function (pt) {
+                      return el("li", { text: pt });
+                    })
+                  )
+                : null,
+            ]);
+          })
+        ),
       ])
     );
   });
+
+  // ---------- Education & certifications ----------
 
   var education = target("education");
   (data.education || []).forEach(function (item) {
@@ -253,6 +271,20 @@
       ])
     );
   });
+
+  var certs = target("certifications");
+  (data.certifications || []).forEach(function (c) {
+    var meta = [c.org, c.year].filter(Boolean).join(" · ");
+    certs.appendChild(
+      el("li", null, [
+        el("span", { className: "cert-title", text: c.title }),
+        meta ? el("span", { className: "cert-meta", text: meta }) : null,
+        c.credential ? el("span", { className: "tl-credential", text: "Credential " + c.credential }) : null,
+      ])
+    );
+  });
+  if (!certs.children.length) certs.parentNode.hidden = true;
+  if (!education.children.length) education.parentNode.hidden = true;
 
   // ---------- Header: mobile menu, scroll state, active link ----------
   var header = document.querySelector(".site-header");

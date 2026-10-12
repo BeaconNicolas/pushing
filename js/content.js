@@ -12,11 +12,11 @@ window.PORTFOLIO = {
   profile: {
     name: "Beacon Nicolas Mkhabele",
     initials: "BM",
-    role: "Data Science & Machine Learning",
-    location: "Johannesburg, South Africa",
-    availability: "Open to data science and analytics roles",
+    role: "Data Scientist · BMW IT Hub South Africa",
+    location: "Pretoria, Gauteng, South Africa",
+    availability: "Open to data science and cloud roles",
     tagline:
-      "I build end-to-end data projects, from cleaning and statistical testing to machine-learning models and Tableau dashboards, and explain the results in plain language.",
+      "I build production data science on AWS: optimisation pipelines in Python, the Terraform infrastructure underneath them, and the CI/CD that ships them from development to production.",
 
     // Contact links. Leave "" to hide a button.
     email: "", // e.g. "yourname@gmail.com"
@@ -32,71 +32,212 @@ window.PORTFOLIO = {
 
   // Three quick numbers shown under the intro.
   stats: [
-    { value: "6", label: "end-to-end data science projects" },
-    { value: "364k", label: "NYC 311 records cleaned and analysed" },
-    { value: "Certified", label: "Data & AI Master's Program, 2023" },
+    { value: "~3 yrs", label: "at BMW IT Hub, from graduate consultant to data scientist" },
+    { value: "1.5 yrs", label: "teaching machine learning and data analytics at 2U" },
+    { value: "AWS", label: "Certified Cloud Practitioner" },
   ],
 
   about: [
-    "I'm a data science intern at Deviare in Johannesburg. Through Deviare's Data & AI Master's Program I covered statistics, Python for data science, machine learning, deep learning with Keras and TensorFlow, and Tableau, and delivered a hands-on project for each.",
-    "I like taking a raw dataset and following it all the way through: cleaning, exploring, testing whether a pattern is real, building a model, and turning the findings into something a business can act on. I'm looking for a role where I can keep doing that on real problems.",
+    "I'm a data scientist at BMW IT Hub South Africa in Pretoria, where I own a multi-step AWS pipeline that solves mixed-integer linear programming (MILP) models. I joined BMW IT Hub as a data science graduate in 2024 and spent nearly two years on the DevOps and AWS side, so I don't stop at the model: I also build the Terraform infrastructure, CI/CD pipelines and multi-account AWS setup that keep it running in production.",
+    "My foundation is mathematical, with a BSc in Applied Mathematics and Mathematical Statistics from Rhodes University. I also spent a year and a half as an instructional specialist on 2U's data analytics and machine learning boot camps, mentoring students and grading their work in Python, machine learning, deep learning and Tableau.",
   ],
 
   // Shown next to the About text.
   facts: [
-    { label: "Based in", value: "Johannesburg, South Africa" },
-    { label: "Focus", value: "Machine learning, analytics, visualisation" },
-    { label: "Currently", value: "Data Science Intern at Deviare" },
-    { label: "Main tools", value: "Python, scikit-learn, TensorFlow, Tableau" },
+    { label: "Based in", value: "Pretoria, South Africa" },
+    { label: "Currently", value: "Data Scientist, BMW IT Hub South Africa" },
+    { label: "Focus", value: "Optimisation, cloud data pipelines, MLOps" },
+    { label: "Degree", value: "BSc Applied Mathematics & Mathematical Statistics" },
+    { label: "Main tools", value: "Python, AWS, Terraform, Docker" },
   ],
 
-  skills: [
+  // Newest first. Each company can list several roles (e.g. promotions).
+  experience: [
     {
-      group: "Languages & data",
-      items: ["Python", "SQL", "pandas", "NumPy", "Jupyter", "Excel"],
-    },
-    {
-      group: "Machine learning",
-      items: [
-        "scikit-learn",
-        "Regression & classification",
-        "Random Forest",
-        "XGBoost",
-        "K-Means clustering",
-        "PCA",
-        "GridSearchCV tuning",
+      org: "BMW IT Hub South Africa",
+      place: "Pretoria",
+      period: "Jan 2024 – Present",
+      roles: [
+        {
+          title: "Data Scientist",
+          period: "Oct 2026 – Present",
+          points: [
+            "Own and maintain the complex, multi-step AWS data science MILP (mixed-integer linear programming) pipeline for Bedarfs Kosmos.",
+            "Translate the pipeline's existing AWS resources, originally built without Terraform, into Terraform infrastructure as code.",
+            "Set up CI/CD pipelines to deploy the pipeline across Development, Integration and Production environments.",
+            "Engineer algorithmic and architectural optimisations within the pipeline to improve performance.",
+            "Provide ongoing support, delivering daily enhancements and bug fixes to highly technical, mathematical Python workflows.",
+          ],
+        },
+        {
+          title: "AWS Developer Consultant",
+          period: "Oct 2025 – Sep 2026",
+          points: [
+            "Fixed broken AWS CI/CD pipelines, restoring deployments.",
+            "Designed a multi-account architecture (Dev, INT, Prod, Tooling) and enabled cross-account deployments with IAM roles.",
+            "Built Terraform-based infrastructure and populated new AWS environments from scratch.",
+            "Developed AWS Glue ETL jobs and workflows, and configured Lambda, S3 and triggers.",
+            "Built CI/CD pipelines with Docker, ECR and Terraform.",
+          ],
+        },
+        {
+          title: "DevOps Developer Consultant",
+          period: "Jan 2025 – Oct 2025",
+          points: [
+            "Maintained and supported AWS cloud operations to keep data delivery smooth and reliable.",
+            "Built and managed infrastructure with Terraform and set up CI/CD pipelines to streamline deployments.",
+            "Developed frontend features in Angular and backend logic in Python on AWS Cloud9.",
+            "Maintained AWS Lambda functions packaged and deployed as Docker images.",
+            "Helped secure AWS resources by finding and fixing potential vulnerabilities.",
+          ],
+        },
+        {
+          title: "Data Science Graduate Consultant",
+          period: "Jan 2024 – Jan 2025",
+          points: [
+            "Automated Excel workflows with Python.",
+            "Cleaned, transformed and compared data.",
+            "Gained hands-on AWS cloud experience and took part in hackathons.",
+          ],
+        },
       ],
     },
     {
-      group: "Deep learning",
-      items: ["TensorFlow", "Keras", "Dense neural networks", "Early stopping"],
-    },
-    {
-      group: "Statistics",
-      items: [
-        "Exploratory data analysis",
-        "Hypothesis testing",
-        "ANOVA",
-        "Chi-square",
-        "Feature engineering",
-        "VIF / multicollinearity",
+      org: "2U",
+      place: "Cape Town",
+      period: "Sep 2023 – Mar 2025",
+      roles: [
+        {
+          title: "Machine Learning and Artificial Intelligence Instructional Specialist",
+          period: "Sep 2023 – Mar 2025",
+          points: [
+            "Mentored students in a 2U boot camp covering machine learning, Python, deep learning, TensorFlow, data science and natural language processing.",
+            "Helped students with coursework, gave feedback and graded assignments.",
+          ],
+        },
+        {
+          title: "Data Analytics Instructional Specialist",
+          period: "Sep 2023 – Mar 2025",
+          points: [
+            "Taught and mentored students in a 2U Data Analytics boot camp covering Python (NumPy, SciPy, pandas, Matplotlib), web visualisation and Tableau.",
+            "Provided academic support, graded assignments and supported students throughout the programme.",
+          ],
+        },
       ],
     },
     {
-      group: "Visualisation",
-      items: ["Tableau", "Matplotlib", "Seaborn", "Plotly"],
+      org: "Deviare",
+      place: "Johannesburg",
+      period: "May 2023 – Jan 2024",
+      roles: [
+        {
+          title: "Digital Skills Training for Data Science",
+          period: "May 2023 – Jan 2024",
+          points: [
+            "Python for data wrangling, probability and data visualisation.",
+            "Machine learning with regression, classification, decision trees and random forests.",
+            "Deep learning with TensorFlow and Keras, including CNNs, RNNs and autoencoders.",
+            "Completed six hands-on projects and earned the Data and AI Master's Program certificate.",
+          ],
+        },
+      ],
     },
     {
-      group: "Also worked with",
-      items: ["MongoDB", "PySpark", "Flask APIs", "Web scraping", "Git & GitHub"],
+      org: "Rhodes University",
+      place: "Makhanda",
+      period: "Mar 2022 – Nov 2022",
+      roles: [
+        {
+          title: "Statistics for Commerce Tutor",
+          period: "Aug 2022 – Nov 2022",
+          points: ["Explained concepts to students and marked their scripts and tutorials."],
+        },
+        {
+          title: "Mathematics for Science Tutor",
+          period: "Mar 2022 – Jun 2022",
+          points: ["Explained concepts to students and marked their scripts and tutorials."],
+        },
+      ],
+    },
+    {
+      org: "Inkululeko",
+      place: "Makhanda",
+      period: "Sep 2022 – Nov 2022",
+      roles: [
+        {
+          title: "Mathematics Tutor",
+          period: "Sep 2022 – Nov 2022",
+          points: ["Taught lessons to learners and marked their scripts."],
+        },
+      ],
     },
   ],
 
-  // category must match one of the filter buttons: it is created automatically.
+  // category must match one of the filter buttons: they are created automatically.
+  // context + year appear at the top right of each card.
   projects: [
     {
+      title: "MILP Optimisation Pipeline on AWS",
+      category: "Optimisation",
+      context: "BMW IT Hub",
+      year: "2026",
+      summary:
+        "Own and maintain the multi-step AWS data science pipeline behind Bedarfs Kosmos, which solves mixed-integer linear programming (MILP) models.",
+      points: [
+        "Engineering algorithmic and architectural optimisations to improve the pipeline's performance.",
+        "Translating its AWS resources, originally built without Terraform, into infrastructure as code.",
+        "Setting up CI/CD to deploy it across Development, Integration and Production.",
+        "Delivering daily enhancements and bug fixes to highly mathematical Python workflows.",
+      ],
+      tags: ["Python", "MILP", "AWS", "Terraform", "CI/CD"],
+      links: [],
+    },
+    {
+      title: "Multi-Account AWS Platform",
+      category: "Cloud & DevOps",
+      context: "BMW IT Hub",
+      year: "2025–26",
+      summary:
+        "Designed a multi-account AWS architecture (Dev, INT, Prod and Tooling) and got broken deployments working again.",
+      points: [
+        "Fixed broken AWS CI/CD pipelines, restoring deployments.",
+        "Enabled cross-account deployments using IAM roles.",
+        "Built CI/CD with Docker, ECR and Terraform, and populated new AWS environments from scratch.",
+      ],
+      tags: ["AWS", "Terraform", "IAM", "Docker", "ECR"],
+      links: [],
+    },
+    {
+      title: "Serverless ETL with AWS Glue",
+      category: "Cloud & DevOps",
+      context: "BMW IT Hub",
+      year: "2025–26",
+      summary: "Built AWS Glue ETL jobs and workflows, wired up with Lambda, S3 and triggers.",
+      points: [
+        "Developed Glue ETL jobs and workflows to transform and move data.",
+        "Configured Lambda functions, S3 buckets and the triggers that connect them.",
+        "Maintained Lambda functions packaged and deployed as Docker images.",
+      ],
+      tags: ["AWS Glue", "Lambda", "S3", "Python", "Docker"],
+      links: [],
+    },
+    {
+      title: "Excel Workflow Automation",
+      category: "Analytics",
+      context: "BMW IT Hub",
+      year: "2024",
+      summary: "Replaced manual, repetitive Excel work with Python scripts during my graduate year.",
+      points: [
+        "Automated Excel workflows with Python.",
+        "Cleaned, transformed and compared data as part of those workflows.",
+      ],
+      tags: ["Python", "Excel", "Automation"],
+      links: [],
+    },
+    {
       title: "Lending Club Loan Repayment Prediction",
-      category: "Deep Learning",
+      category: "Machine Learning",
+      context: "Deviare",
       year: "2023",
       summary:
         "Predicted whether a borrower would fully repay their loan, using 9,578 Lending Club loan records.",
@@ -116,6 +257,7 @@ window.PORTFOLIO = {
     {
       title: "Mercedes-Benz Greener Manufacturing",
       category: "Machine Learning",
+      context: "Deviare",
       year: "2023",
       summary:
         "Predicted how long a car spends on the test bench from about 380 anonymised configuration features. Shorter testing means lower CO₂ emissions.",
@@ -133,27 +275,9 @@ window.PORTFOLIO = {
       ],
     },
     {
-      title: "NYC 311 Customer Service Requests",
-      category: "Data Analysis",
-      year: "2023",
-      summary:
-        "Cleaned and analysed 364,558 NYC 311 service requests to see how quickly the city closes different kinds of complaints.",
-      points: [
-        "Cleaned 53 columns of messy public data, handling missing values and duplicates.",
-        "Engineered a request-closing-time feature and ranked complaint types by average closing time per borough.",
-        "Used ANOVA and chi-square tests to check whether response times really differ across complaint types and locations.",
-      ],
-      tags: ["Python", "pandas", "SciPy", "Matplotlib"],
-      links: [
-        {
-          label: "Code",
-          url: "https://github.com/BeaconNicolas/Data_Science",
-        },
-      ],
-    },
-    {
       title: "Creating Cohorts of Songs",
       category: "Machine Learning",
+      context: "Deviare",
       year: "2023",
       summary:
         "Grouped Rolling Stones tracks into cohorts using Spotify audio features, to support better song recommendations.",
@@ -171,8 +295,29 @@ window.PORTFOLIO = {
       ],
     },
     {
+      title: "NYC 311 Customer Service Requests",
+      category: "Analytics",
+      context: "Deviare",
+      year: "2023",
+      summary:
+        "Cleaned and analysed 364,558 NYC 311 service requests to see how quickly the city closes different kinds of complaints.",
+      points: [
+        "Cleaned 53 columns of messy public data, handling missing values and duplicates.",
+        "Engineered a request-closing-time feature and ranked complaint types by average closing time per borough.",
+        "Used ANOVA and chi-square tests to check whether response times really differ across complaint types and locations.",
+      ],
+      tags: ["Python", "pandas", "SciPy", "Matplotlib"],
+      links: [
+        {
+          label: "Code",
+          url: "https://github.com/BeaconNicolas/Data_Science",
+        },
+      ],
+    },
+    {
       title: "House Price Feature Engineering",
-      category: "Data Analysis",
+      category: "Analytics",
+      context: "Deviare",
       year: "2023",
       summary:
         "Prepared a housing dataset of 1,460 homes and 81 variables for predicting sale price.",
@@ -191,7 +336,8 @@ window.PORTFOLIO = {
     },
     {
       title: "Comparative Study of Countries",
-      category: "Visualisation",
+      category: "Analytics",
+      context: "Deviare",
       year: "2023",
       summary:
         "Tableau dashboards and map visualisations comparing growth across dozens of countries.",
@@ -207,47 +353,74 @@ window.PORTFOLIO = {
         },
       ],
     },
-    {
-      title: "Data Analytics Coursework",
-      category: "Coursework",
-      year: "2025",
-      summary:
-        "Hands-on modules across the analytics stack: Excel, VBA, Python, SQL, MongoDB, web scraping, Plotly and Leaflet, Tableau, machine learning, neural networks and PySpark.",
-      points: [
-        "Credit-risk classification with Logistic Regression on 77,536 loans.",
-        "Crypto market clustering, a SQLAlchemy and Flask climate API, and PySpark home-sales analysis.",
-      ],
-      tags: ["SQL", "MongoDB", "PySpark", "JavaScript"],
-      links: [
-        {
-          label: "Repository",
-          url: "https://github.com/BeaconNicolas/2U_Projects",
-        },
-      ],
-    },
   ],
 
-  experience: [
+  skills: [
     {
-      role: "Data Science Intern",
-      org: "Deviare",
-      place: "Johannesburg",
-      period: "2023 – Present",
-      points: [
-        "Completed Deviare's Data & AI Master's Program as part of the internship.",
-        "Delivered six data science projects covering analysis, machine learning, deep learning and Tableau.",
+      group: "Data science & optimisation",
+      items: [
+        "Python",
+        "Mixed-integer linear programming",
+        "pandas",
+        "NumPy",
+        "SciPy",
+        "Statistics & hypothesis testing",
+        "R (regression)",
       ],
+    },
+    {
+      group: "Machine learning",
+      items: [
+        "scikit-learn",
+        "Regression & classification",
+        "Decision trees & random forests",
+        "XGBoost",
+        "K-Means & PCA",
+        "Feature engineering",
+      ],
+    },
+    {
+      group: "Deep learning",
+      items: ["TensorFlow", "Keras", "CNNs", "RNNs", "Autoencoders"],
+    },
+    {
+      group: "AWS",
+      items: ["Glue", "Lambda", "S3", "ECR", "IAM & cross-account roles", "Cloud9", "Multi-account architecture"],
+    },
+    {
+      group: "DevOps & engineering",
+      items: ["Terraform", "CI/CD pipelines", "Docker", "Git", "Linux / WSL (Ubuntu)", "Angular"],
+    },
+    {
+      group: "Data & visualisation",
+      items: ["SQL", "MongoDB", "Tableau", "Matplotlib", "Seaborn", "Excel automation"],
     },
   ],
 
   education: [
     {
+      title: "BSc in Applied Mathematics and Mathematical Statistics",
+      org: "Rhodes University",
+      period: "2020 – 2022",
+    },
+    {
+      title: "BSc in Mathematical Science",
+      org: "University of the Free State",
+      period: "2018 – 2019",
+    },
+  ],
+
+  certifications: [
+    { title: "AWS Certified Cloud Practitioner", org: "Amazon Web Services" },
+    {
       title: "Data and AI Master's Program",
       org: "Deviare",
-      period: "Issued September 2023",
-      detail:
-        "Statistics Essentials · Data Science with Python · Machine Learning · Deep Learning with Keras and TensorFlow · Tableau · Capstone Project",
-      credential: "Certificate no. Dev-508-86",
+      year: "2023",
+      credential: "Dev-508-86",
     },
+    { title: "Deep Learning with TensorFlow" },
+    { title: "Introduction to Regression in R" },
+    { title: "Intermediate Regression in R" },
+    { title: "MongoDB for SQL Pros" },
   ],
 };
