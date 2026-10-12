@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Beacon Nicolas Mkhabele · Data Science Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio of Beacon Nicolas Mkhabele, a Johannesburg-based data scientist working in Python, machine learning, deep learning and Tableau."
+    />
+    <meta name="author" content="Beacon Nicolas Mkhabele" />
+    <meta name="theme-color" content="#0f766e" />
+
+    <!-- Link previews (LinkedIn, WhatsApp, email). If you move the site, update the URLs below. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Beacon Nicolas Mkhabele · Data Science Portfolio" />
+    <meta
+      property="og:description"
+      content="Machine learning, deep learning, statistics and Tableau projects, from raw data to insight."
+    />
+    <meta property="og:url" content="https://beaconnicolas.github.io/pushing/" />
+    <meta property="og:image" content="https://beaconnicolas.github.io/pushing/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Apply the saved theme before first paint so the page doesn't flash. -->
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="nav container" aria-label="Main">
+        <a class="brand" href="#top" aria-label="Back to top">
+          <span class="brand-mark" data-bind="initials">BM</span>
+          <span class="brand-name" data-bind="name">Beacon Nicolas Mkhabele</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">Menu</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+          <a class="btn btn-small btn-primary" data-resume hidden download>Download CV</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Switch colour theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2" />
+            <path
+              d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero container" id="top">
+        <div class="hero-text">
+          <p class="status"><span class="status-dot" aria-hidden="true"></span><span data-bind="availability"></span></p>
+          <p class="eyebrow" data-bind="role"></p>
+          <h1 data-bind="name">Beacon Nicolas Mkhabele</h1>
+          <p class="lede" data-bind="tagline"></p>
+          <p class="hero-location">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="12" cy="9.5" r="2.5" fill="currentColor" />
+            </svg>
+            <span data-bind="location"></span>
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View my projects</a>
+            <a class="btn" data-resume hidden download>Download CV</a>
+            <a class="btn" data-link="linkedin" hidden target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn btn-ghost" data-link="github" hidden target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+
+        <figure class="plot-card" aria-labelledby="plot-caption">
+          <div class="plot-head">
+            <span class="plot-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <code>kmeans.fit(data)</code>
+            <button class="plot-run" type="button">Run again</button>
+          </div>
+          <svg class="plot" viewBox="0 0 400 280" role="img" aria-label="Animated k-means clustering of sample points into three groups">
+            <g class="plot-grid" aria-hidden="true"></g>
+            <g class="plot-points"></g>
+            <g class="plot-centroids"></g>
+          </svg>
+          <figcaption id="plot-caption" class="plot-foot">
+            <span>k = 3</span>
+            <span class="plot-status" aria-live="polite">iteration 0</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="container" aria-label="Highlights">
+        <ul class="stats" data-render="stats"></ul>
+      </section>
+
+      <section class="section container" id="about">
+        <div class="section-head">
+          <p class="section-kicker">01</p>
+          <h2>About me</h2>
+        </div>
+        <div class="about">
+          <div class="about-text" data-render="about"></div>
+          <aside class="about-card">
+            <div class="avatar" data-render="avatar"></div>
+            <dl class="facts" data-render="facts"></dl>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section container" id="skills">
+        <div class="section-head">
+          <p class="section-kicker">02</p>
+          <h2>Skills</h2>
+        </div>
+        <div class="skills" data-render="skills"></div>
+      </section>
+
+      <section class="section container" id="projects">
+        <div class="section-head">
+          <p class="section-kicker">03</p>
+          <h2>Projects</h2>
+          <p class="section-sub">Selected work, from raw data to model or dashboard.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filter projects by category" data-render="filters"></div>
+        <div class="projects" data-render="projects"></div>
+      </section>
+
+      <section class="section container" id="experience">
+        <div class="section-head">
+          <p class="section-kicker">04</p>
+          <h2>Experience &amp; certification</h2>
+        </div>
+        <div class="timeline-wrap">
+          <div>
+            <h3 class="col-title">Experience</h3>
+            <ol class="timeline" data-render="experience"></ol>
+          </div>
+          <div>
+            <h3 class="col-title">Education &amp; certification</h3>
+            <ol class="timeline" data-render="education"></ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container" id="contact">
+        <div class="contact">
+          <div>
+            <p class="section-kicker">05</p>
+            <h2>Let's talk</h2>
+            <p class="contact-text">
+              I'm <span data-bind="availabilityLower"></span>. The quickest way to reach me is on LinkedIn.
+            </p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-primary btn-large" data-link="email" hidden>Email me</a>
+            <a class="btn btn-large" data-link="linkedin" hidden target="_blank" rel="noopener">Message on LinkedIn</a>
+            <a class="btn btn-large" data-resume hidden download>Download CV</a>
+            <a class="btn btn-ghost btn-large" data-link="github" hidden target="_blank" rel="noopener">See my GitHub</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <p>© <span data-bind="year"></span> <span data-bind="name">Beacon Nicolas Mkhabele</span></p>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <noscript>
+      <p class="container">This site needs JavaScript to show its content. Please enable it and reload.</p>
+    </noscript>
+
+    <script src="js/content.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
