@@ -51,6 +51,46 @@ window.PORTFOLIO = {
     { label: "Main tools", value: "Python, AWS, Terraform, Docker" },
   ],
 
+  // Contribution graph from your BMW GitHub account (the repos are private).
+  // `levels` has one digit per day from 1 January: 0 = none, 1–4 = low to very high,
+  // copied from GitHub's graph. `total` is the number GitHub shows for that year.
+  activity: {
+    note: "Contributions on my BMW IT Hub GitHub account, as of 12 October 2026. The repositories are internal, so this shows my activity rather than the code.",
+    years: [
+      {
+        year: 2026,
+        total: 224,
+        label: "so far",
+        levels:
+        "0000000000000101002230100100000011000000300000001110010100000011000010100" +
+        "0230000000200000012000000000040100000001000000000000011002201000010020010" +
+        "1000003100000111000000000010110000001000011200010000000000000000000000000" +
+        "0000000000000000000000000010000000000000000000000000000000111100010000000" +
+        "0000000000000000000000000000000000000000000000000000000000000000000000000",
+      },
+      {
+        year: 2025,
+        total: 236,
+        levels:
+        "0000000000000000000000000000000000000000001000001100000110000000000000100" +
+        "0000000000000000000000000000000000000000000000111001011000001000001100000" +
+        "1100000010000001000000100000010000001000001100000001100001000000100000010" +
+        "0001010000011000000110000000000000000000110000000000011000000001000000000" +
+        "0000000100110003120001311100111430000111000101000111210000000000000000000",
+      },
+    ],
+    highlights: [
+      {
+        period: "Oct 2026",
+        text: "5 commits to the Bedarfs Kosmos Terraform repository, including a pull request that adds a data-science field and an SQS queue (+672 lines).",
+      },
+      {
+        period: "Dec 2025",
+        text: "25 commits across two internal repositories.",
+      },
+    ],
+  },
+
   // Newest first. Each company can list several roles (e.g. promotions).
   experience: [
     {

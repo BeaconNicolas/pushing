@@ -257,6 +257,155 @@
     );
   });
 
+  // ---------- Commit history (contribution graph) ----------
+  var activity = data.activity;
+  var activityBox = target("activity");
+  if (activity && activity.years && activity.years.length) {
+    renderActivity(activity, activityBox);
+  } else {
+    document.getElementById("activity").hidden = true;
+  }
+
+  function renderActivity(info, box) {
+    var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var LEVEL_NAMES = ["no contributions", "low activity", "medium activity", "high activity", "very high activity"];
+    var PITCH = 14;
+    var CELL = 11;
+    var LEFT = 30;
+    var TOP = 18;
+
+    var note = target("activity-note");
+    if (info.note) note.textContent = info.note;
+    else note.hidden = true;
+
+    var years = info.years;
+    var grandTotal = years.reduce(function (sum, y) { return sum + (y.total || 0); }, 0);
+    var span = years.length > 1
+      ? Math.min.apply(null, years.map(function (y) { return y.year; })) + "–" +
+        String(Math.max.apply(null, years.map(function (y) { return y.year; }))).slice(-2)
+      : String(years[0].year);
+
+    var tabs = el("div", { className: "activity-tabs", role: "group", "aria-label": "Choose a year" });
+    var yearTotal = el("p", { className: "activity-year" });
+    var scroller = el("div", { className: "heatmap-scroll" });
+
+    box.appendChild(
+      el("div", { className: "activity-card" }, [
+        el("div", { className: "activity-top" }, [
+          el("p", { className: "activity-total" }, [
+            el("span", { className: "stat-value", text: String(grandTotal) }),
+            el("span", { className: "stat-label", text: "contributions across " + span }),
+          ]),
+          tabs,
+        ]),
+        yearTotal,
+        scroller,
+        el("div", { className: "heatmap-legend", "aria-hidden": "true" }, [
+          el("span", { text: "Less" }),
+        ].concat([0, 1, 2, 3, 4].map(function (l) {
+          return el("i", { className: "lvl-" + l });
+        })).concat([el("span", { text: "More" })])),
+      ])
+    );
+
+    if (info.highlights && info.highlights.length) {
+      box.appendChild(
+        el("ul", { className: "activity-highlights" }, info.highlights.map(function (h) {
+          return el("li", null, [
+            el("span", { className: "role-period", text: h.period }),
+            el("p", { text: h.text }),
+          ]);
+        }))
+      );
+    }
+
+    function draw(y) {
+      var levels = y.levels || "";
+      var jan1 = new Date(Date.UTC(y.year, 0, 1));
+      var lead = jan1.getUTCDay(); // empty slots before 1 January in the first column
+      var weeks = Math.ceil((lead + levels.length) / 7);
+      var active = 0;
+
+      var width = LEFT + weeks * PITCH;
+      var height = TOP + 7 * PITCH;
+      var svgEl = svg("svg", {
+        class: "heatmap",
+        viewBox: "0 0 " + width + " " + height,
+        role: "img",
+        "aria-label": "Contribution graph for " + y.year + ": " + y.total + " contributions",
+      });
+
+      [1, 3, 5].forEach(function (d) {
+        var t = svg("text", { x: 0, y: TOP + d * PITCH + CELL - 2, class: "heatmap-label" });
+        t.textContent = DAYS[d];
+        svgEl.appendChild(t);
+      });
+
+      var lastLabelCol = -9;
+      for (var m = 0; m < 12; m++) {
+        var first = new Date(Date.UTC(y.year, m, 1));
+        var dayIndex = Math.round((first - jan1) / 86400000);
+        if (dayIndex >= levels.length) break;
+        var col = Math.floor((lead + dayIndex) / 7);
+        if (col - lastLabelCol < 3) continue;
+        var label = svg("text", { x: LEFT + col * PITCH, y: 10, class: "heatmap-label" });
+        label.textContent = MONTHS[m];
+        svgEl.appendChild(label);
+        lastLabelCol = col;
+      }
+
+      for (var i = 0; i < levels.length; i++) {
+        var level = Math.max(0, Math.min(4, parseInt(levels.charAt(i), 10) || 0));
+        if (level) active++;
+        var slot = lead + i;
+        var date = new Date(jan1.getTime() + i * 86400000);
+        var rect = svg("rect", {
+          x: LEFT + Math.floor(slot / 7) * PITCH,
+          y: TOP + (slot % 7) * PITCH,
+          width: CELL,
+          height: CELL,
+          rx: 2,
+          class: "lvl-" + level,
+        });
+        var title = svg("title", {});
+        title.textContent =
+          DAYS[date.getUTCDay()] + " " + date.getUTCDate() + " " + MONTHS[date.getUTCMonth()] + " " + y.year +
+          ": " + LEVEL_NAMES[level];
+        rect.appendChild(title);
+        svgEl.appendChild(rect);
+      }
+
+      scroller.textContent = "";
+      scroller.appendChild(svgEl);
+      // On narrow screens the graph scrolls sideways; start with the latest activity in view.
+      var lastActive = levels.search(/[1-4][0]*$/);
+      var lastCol = lastActive < 0 ? weeks : Math.floor((lead + lastActive) / 7) + 1;
+      var scale = scroller.scrollWidth / width;
+      scroller.scrollLeft = Math.max(0, (LEFT + (lastCol + 2) * PITCH) * scale - scroller.clientWidth);
+
+      yearTotal.textContent =
+        y.total + " contributions in " + y.year + (y.label ? " " + y.label : "") +
+        ", on " + active + " different days";
+
+      each(".activity-tabs .filter", function (btn) {
+        btn.setAttribute("aria-pressed", String(btn.getAttribute("data-year") === String(y.year)));
+      });
+    }
+
+    years.forEach(function (y) {
+      var btn = el("button", { className: "filter", type: "button", "data-year": String(y.year), "aria-pressed": "false" }, [
+        document.createTextNode(String(y.year)),
+      ]);
+      btn.addEventListener("click", function () {
+        draw(y);
+      });
+      tabs.appendChild(btn);
+    });
+    if (years.length < 2) tabs.hidden = true;
+    draw(years[0]);
+  }
+
   // ---------- Education & certifications ----------
 
   var education = target("education");
