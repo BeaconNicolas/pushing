@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Send HD Video</title>
+    <meta
+      name="description"
+      content="Turn any video into a high-quality MP4 that plays on both iPhone and Android, then send it straight from your phone. Everything happens on your device; nothing is uploaded."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Send HD Video" />
+    <meta
+      property="og:description"
+      content="Make any video small, sharp and playable on iPhone and Android, then send it. Nothing leaves your device."
+    />
+
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="video.css" />
+
+    <!-- Same saved theme as the rest of the site, applied before first paint. -->
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+
+    <!-- The AAC encoder add-on imports "mediabunny" by name; point that name at our local copy. -->
+    <script type="importmap">
+      { "imports": { "mediabunny": "./vendor/mediabunny.min.mjs" } }
+    </script>
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="head">
+        <h1>Send HD video</h1>
+        <p class="lede">
+          Pick a video and get back a sharp, much smaller MP4 that plays on iPhone and Android. Then send it with any
+          app. It all happens on your device, so nothing is uploaded.
+        </p>
+      </header>
+
+      <!-- Step 1: pick a video -->
+      <section class="card" id="pick-step">
+        <label class="drop" id="drop">
+          <input type="file" id="file" accept="video/*" class="sr-only" />
+          <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="13" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M16 10.5 21 7.5v9l-5-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+          </svg>
+          <span class="drop-title">Choose a video</span>
+          <span class="drop-sub">or drop it here</span>
+        </label>
+        <p class="unsupported" id="unsupported" hidden>
+          This browser can't convert video. Open this page in Chrome, Edge, or Safari 16.4 or newer (iPhone or iPad
+          on iOS 16.4+).
+        </p>
+      </section>
+
+      <!-- Step 2: choose settings -->
+      <section class="card" id="settings-step" hidden>
+        <div class="source">
+          <video id="source-preview" playsinline muted controls preload="metadata"></video>
+          <div>
+            <p class="file-name" id="source-name"></p>
+            <dl class="meta" id="source-meta"></dl>
+            <button class="link-btn" type="button" id="change-file">Choose a different video</button>
+          </div>
+        </div>
+
+        <fieldset class="presets">
+          <legend>Quality</legend>
+          <label class="preset">
+            <input type="radio" name="preset" value="1080" checked />
+            <span class="preset-body">
+              <span class="preset-title">Full HD 1080p <em>Recommended</em></span>
+              <span class="preset-sub">Sharp on any phone screen, and much smaller than the original.</span>
+            </span>
+          </label>
+          <label class="preset">
+            <input type="radio" name="preset" value="720" />
+            <span class="preset-body">
+              <span class="preset-title">HD 720p</span>
+              <span class="preset-sub">Smallest file and quickest to send. Good for chat apps and slow data.</span>
+            </span>
+          </label>
+          <label class="preset">
+            <input type="radio" name="preset" value="original" />
+            <span class="preset-body">
+              <span class="preset-title">Keep the original resolution</span>
+              <span class="preset-sub">Up to 4K. Larger file, made to play on both iPhone and Android.</span>
+            </span>
+          </label>
+          <label class="preset">
+            <input type="radio" name="preset" value="size" />
+            <span class="preset-body">
+              <span class="preset-title">Fit a file size</span>
+              <span class="preset-sub">
+                Keep it under
+                <input type="number" id="target-mb" min="1" max="4000" step="1" value="16" inputmode="numeric" aria-label="Maximum size in megabytes" />
+                MB. Picks the best quality that fits.
+              </span>
+            </span>
+          </label>
+        </fieldset>
+
+        <p class="estimate" id="estimate" aria-live="polite"></p>
+        <button class="btn btn-primary btn-large btn-block" type="button" id="convert">Make it ready to send</button>
+      </section>
+
+      <!-- Step 3: converting -->
+      <section class="card" id="progress-step" hidden>
+        <p class="progress-label"><span id="progress-text">Getting ready…</span><span id="progress-pct">0%</span></p>
+        <div class="bar" role="progressbar" aria-labelledby="progress-text" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+          <span id="bar-fill"></span>
+        </div>
+        <p class="hint">Keep this page open and your screen on until it finishes.</p>
+        <button class="btn btn-block" type="button" id="cancel">Cancel</button>
+      </section>
+
+      <!-- Step 4: send -->
+      <section class="card" id="done-step" hidden>
+        <video id="result-preview" playsinline controls preload="metadata"></video>
+        <p class="saving" id="saving"></p>
+        <dl class="meta" id="result-meta"></dl>
+        <div class="actions">
+          <button class="btn btn-primary btn-large" type="button" id="share" hidden>Send</button>
+          <a class="btn btn-large" id="download" download>Save to device</a>
+        </div>
+        <p class="hint" id="share-hint"></p>
+        <button class="link-btn" type="button" id="start-over">Convert another video</button>
+      </section>
+
+      <p class="error" id="error" role="alert" hidden></p>
+
+      <section class="how">
+        <h2>How it works</h2>
+        <ul>
+          <li>
+            <strong>Plays everywhere.</strong> iPhones often record in HEVC, which many Android phones can't play. The
+            video is re-encoded as H.264 with AAC audio in an MP4, the format both platforms play natively.
+          </li>
+          <li>
+            <strong>Smaller, still sharp.</strong> Phone cameras record at very high bitrates. Bringing it down to a
+            sensible bitrate for the resolution cuts the size a lot with little visible difference.
+          </li>
+          <li>
+            <strong>Starts playing straight away.</strong> The file's index is placed at the front, so it can start
+            playing before it has fully downloaded.
+          </li>
+          <li>
+            <strong>Private.</strong> Your video never leaves your device. Conversion uses your phone or computer's
+            built-in video encoder.
+          </li>
+        </ul>
+      </section>
+
+      <footer class="foot">
+        <a href="../">← Back to the main site</a>
+        <span>Video engine: <a href="https://mediabunny.dev/" target="_blank" rel="noopener">Mediabunny</a> (MPL-2.0)</span>
+      </footer>
+    </main>
+
+    <script type="module" src="video.js"></script>
+  </body>
+</html>

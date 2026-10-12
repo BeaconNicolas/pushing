@@ -12,6 +12,7 @@ js/content.js       ← ALL your text: profile, projects, skills, experience
 js/main.js          Renders content.js and runs the interactive bits
 css/style.css       Styling, including light and dark themes
 assets/             Favicon, link-preview image, and your CV/photo when you add them
+video/              "Send HD video" tool (separate page, see below)
 ```
 
 ## Put it online with GitHub Pages (one-time, about 2 minutes)
@@ -56,3 +57,16 @@ python3 -m http.server 8000
 - Clean print layout, in case a recruiter prints the page
 - Link-preview image and meta tags for LinkedIn, WhatsApp and email
 - Accessible: keyboard navigation, skip link, reduced-motion support
+
+## Send HD video (`video/`)
+
+A separate page at **https://beaconnicolas.github.io/pushing/video/** that gets a video ready to send to anyone, on iPhone or Android:
+
+1. Pick or drop a video (MP4, MOV, WebM, MKV; iPhone HEVC included).
+2. Choose **Full HD 1080p** (recommended), **HD 720p**, **Keep the original resolution**, or **Fit a file size** (for example "under 16 MB").
+3. It's converted to an **H.264 + AAC MP4**, the one format every iPhone and Android phone plays. Rotation is baked in, the bitrate suits the resolution, and the index sits at the front so playback starts straight away.
+4. Tap **Send** to open the phone's share sheet (WhatsApp, Messages, Telegram, email, AirDrop…), or **Save to device**.
+
+Everything runs in the browser through WebCodecs. **Nothing is uploaded**, so there's no server and no storage cost. It needs Chrome or Edge (desktop or Android), or Safari 16.4+ (iPhone/iPad on iOS 16.4+, or Mac). Files that are already phone-friendly H.264 at the right size are copied untouched instead of re-encoded.
+
+The video engine is [Mediabunny](https://mediabunny.dev/) (MPL-2.0), copied into `video/vendor/` so the page doesn't depend on a CDN. The AAC encoder add-on (about 1 MB) only loads in browsers that can't encode AAC themselves. The `video/` folder is self-contained, so you can copy it into any other GitHub Pages repository as is.
