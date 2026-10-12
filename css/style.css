@@ -1059,22 +1059,30 @@ a:hover {
   font: 400 13px/1.5 var(--font-mono);
 }
 
-.heatmap-scroll {
+.heatmap-wrap {
+  display: flex;
   margin-top: 14px;
+}
+
+.heatmap-days {
+  display: block;
+  flex: none;
+}
+
+.heatmap-scroll {
+  flex: 1 1 auto;
+  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .heatmap {
   display: block;
-  width: 100%;
-  min-width: 640px;
-  height: auto;
 }
 
 .heatmap-label {
   fill: var(--muted);
-  font: 400 9px var(--font-sans);
+  font: 400 11px var(--font-sans);
 }
 
 .heatmap .lvl-0,
@@ -1114,8 +1122,8 @@ a:hover {
 }
 
 .heatmap-legend i {
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   border-radius: 2px;
 }
 
@@ -1366,12 +1374,39 @@ a:hover {
 
 /* ---------- Print: a clean copy if a recruiter prints the page ---------- */
 @media print {
-  :root {
+  :root,
+  :root[data-theme="dark"],
+  :root:not([data-theme="light"]) {
     --bg: #fff;
     --surface: #fff;
+    --surface-2: #f0eee8;
     --text: #000;
     --muted: #333;
     --border: #ccc;
+    --accent: #0f766e;
+    --accent-soft: rgba(15, 118, 110, 0.1);
+    color-scheme: light;
+  }
+  .heatmap-scroll {
+    overflow: visible;
+  }
+  .heatmap {
+    width: 100%;
+    height: auto;
+  }
+  .heatmap-days {
+    display: none;
+  }
+  .heatmap-legend i {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .activity-card,
+  .activity-highlights li {
+    break-inside: avoid;
+  }
+  .section-head {
+    break-after: avoid;
   }
   .site-header,
   .plot-card,

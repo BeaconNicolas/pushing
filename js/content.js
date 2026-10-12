@@ -51,22 +51,23 @@ window.PORTFOLIO = {
     { label: "Main tools", value: "Python, AWS, Terraform, Docker" },
   ],
 
-  // Contribution graph from your BMW GitHub account (the repos are private).
+  // Contribution graph from your BMW GitHub account (the repositories belong to BMW).
   // `levels` has one digit per day from 1 January: 0 = none, 1–4 = low to very high,
   // copied from GitHub's graph. `total` is the number GitHub shows for that year.
+  // To update: take a new screenshot and ask for the digits to be re-read, or add days.
   activity: {
-    note: "Contributions on my BMW IT Hub GitHub account, as of 12 October 2026. The repositories are internal, so this shows my activity rather than the code.",
+    note: "Contributions on my BMW IT Hub GitHub account from January 2025 to 12 October 2026. GitHub counts commits, pull requests, issues and code reviews as contributions. The repositories belong to BMW, so this shows my activity rather than the code.",
+    totalLabel: "contributions from January 2025 to 12 October 2026",
     years: [
       {
         year: 2026,
         total: 224,
-        label: "so far",
+        label: "(1 January to 12 October)",
         levels:
         "0000000000000101002230100100000011000000300000001110010100000011000010100" +
         "0230000000200000012000000000040100000001000000000000011002201000010020010" +
         "1000003100000111000000000010110000001000011200010000000000000000000000000" +
-        "0000000000000000000000000010000000000000000000000000000000111100010000000" +
-        "0000000000000000000000000000000000000000000000000000000000000000000000000",
+        "000000000000000000000000001000000000000000000000000000000011110001",
       },
       {
         year: 2025,
@@ -82,11 +83,11 @@ window.PORTFOLIO = {
     highlights: [
       {
         period: "Oct 2026",
-        text: "5 commits to the Bedarfs Kosmos Terraform repository, including a pull request that adds a data-science field and an SQS queue (+672 lines).",
+        text: "5 commits and a pull request (+672 lines) to the pipeline's Terraform infrastructure, including a new SQS queue.",
       },
       {
         period: "Dec 2025",
-        text: "25 commits across two internal repositories.",
+        text: "25 commits across two repositories.",
       },
     ],
   },

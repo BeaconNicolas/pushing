@@ -197,7 +197,7 @@
     cards.forEach(function (card) {
       card.hidden = category !== "All" && card.getAttribute("data-category") !== category;
     });
-    each(".filter", function (btn) {
+    each(".filters .filter", function (btn) {
       btn.setAttribute("aria-pressed", String(btn.getAttribute("data-filter") === category));
     });
   }
@@ -257,7 +257,7 @@
     );
   });
 
-  // ---------- Commit history (contribution graph) ----------
+  // ---------- GitHub activity (contribution graph) ----------
   var activity = data.activity;
   var activityBox = target("activity");
   if (activity && activity.years && activity.years.length) {
@@ -270,10 +270,12 @@
     var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     var LEVEL_NAMES = ["no contributions", "low activity", "medium activity", "high activity", "very high activity"];
-    var PITCH = 14;
-    var CELL = 11;
-    var LEFT = 30;
-    var TOP = 18;
+    // Fixed pixel sizes (like GitHub) so labels stay readable and the legend matches the cells.
+    var CELL = 12;
+    var PITCH = 15;
+    var TOP = 20;
+    var DAY_COL = 32;
+    var HEIGHT = TOP + 7 * PITCH;
 
     var note = target("activity-note");
     if (info.note) note.textContent = info.note;
@@ -281,26 +283,37 @@
 
     var years = info.years;
     var grandTotal = years.reduce(function (sum, y) { return sum + (y.total || 0); }, 0);
-    var span = years.length > 1
-      ? Math.min.apply(null, years.map(function (y) { return y.year; })) + "–" +
-        String(Math.max.apply(null, years.map(function (y) { return y.year; }))).slice(-2)
-      : String(years[0].year);
+    var totalLabel = info.totalLabel || "contributions";
 
     var tabs = el("div", { className: "activity-tabs", role: "group", "aria-label": "Choose a year" });
     var yearTotal = el("p", { className: "activity-year" });
     var scroller = el("div", { className: "heatmap-scroll" });
+
+    // Weekday labels live outside the scrolling area so they stay visible on phones.
+    var dayLabels = svg("svg", {
+      class: "heatmap-days",
+      width: DAY_COL,
+      height: HEIGHT,
+      viewBox: "0 0 " + DAY_COL + " " + HEIGHT,
+      "aria-hidden": "true",
+    });
+    [1, 3, 5].forEach(function (d) {
+      var t = svg("text", { x: 0, y: TOP + d * PITCH + CELL - 2, class: "heatmap-label" });
+      t.textContent = DAYS[d];
+      dayLabels.appendChild(t);
+    });
 
     box.appendChild(
       el("div", { className: "activity-card" }, [
         el("div", { className: "activity-top" }, [
           el("p", { className: "activity-total" }, [
             el("span", { className: "stat-value", text: String(grandTotal) }),
-            el("span", { className: "stat-label", text: "contributions across " + span }),
+            el("span", { className: "stat-label", text: totalLabel }),
           ]),
           tabs,
         ]),
         yearTotal,
-        scroller,
+        el("div", { className: "heatmap-wrap" }, [dayLabels, scroller]),
         el("div", { className: "heatmap-legend", "aria-hidden": "true" }, [
           el("span", { text: "Less" }),
         ].concat([0, 1, 2, 3, 4].map(function (l) {
@@ -320,36 +333,37 @@
       );
     }
 
+    var latestX = 0;
+
+    // On narrow screens the graph scrolls sideways; keep the latest activity in view.
+    function scrollToLatest() {
+      scroller.scrollLeft = Math.max(0, latestX - scroller.clientWidth);
+    }
+
     function draw(y) {
       var levels = y.levels || "";
       var jan1 = new Date(Date.UTC(y.year, 0, 1));
       var lead = jan1.getUTCDay(); // empty slots before 1 January in the first column
       var weeks = Math.ceil((lead + levels.length) / 7);
-      var active = 0;
+      var width = weeks * PITCH;
 
-      var width = LEFT + weeks * PITCH;
-      var height = TOP + 7 * PITCH;
       var svgEl = svg("svg", {
         class: "heatmap",
-        viewBox: "0 0 " + width + " " + height,
+        width: width,
+        height: HEIGHT,
+        viewBox: "0 0 " + width + " " + HEIGHT,
         role: "img",
         "aria-label": "Contribution graph for " + y.year + ": " + y.total + " contributions",
       });
 
-      [1, 3, 5].forEach(function (d) {
-        var t = svg("text", { x: 0, y: TOP + d * PITCH + CELL - 2, class: "heatmap-label" });
-        t.textContent = DAYS[d];
-        svgEl.appendChild(t);
-      });
-
+      // Month labels go above the first week that starts in that month, as on GitHub.
       var lastLabelCol = -9;
       for (var m = 0; m < 12; m++) {
-        var first = new Date(Date.UTC(y.year, m, 1));
-        var dayIndex = Math.round((first - jan1) / 86400000);
+        var dayIndex = Math.round((Date.UTC(y.year, m, 1) - jan1) / 86400000);
         if (dayIndex >= levels.length) break;
-        var col = Math.floor((lead + dayIndex) / 7);
-        if (col - lastLabelCol < 3) continue;
-        var label = svg("text", { x: LEFT + col * PITCH, y: 10, class: "heatmap-label" });
+        var col = m === 0 ? 0 : Math.ceil((lead + dayIndex) / 7);
+        if (col >= weeks || col - lastLabelCol < 3) continue;
+        var label = svg("text", { x: col * PITCH, y: 11, class: "heatmap-label" });
         label.textContent = MONTHS[m];
         svgEl.appendChild(label);
         lastLabelCol = col;
@@ -357,11 +371,10 @@
 
       for (var i = 0; i < levels.length; i++) {
         var level = Math.max(0, Math.min(4, parseInt(levels.charAt(i), 10) || 0));
-        if (level) active++;
         var slot = lead + i;
         var date = new Date(jan1.getTime() + i * 86400000);
         var rect = svg("rect", {
-          x: LEFT + Math.floor(slot / 7) * PITCH,
+          x: Math.floor(slot / 7) * PITCH,
           y: TOP + (slot % 7) * PITCH,
           width: CELL,
           height: CELL,
@@ -378,15 +391,13 @@
 
       scroller.textContent = "";
       scroller.appendChild(svgEl);
-      // On narrow screens the graph scrolls sideways; start with the latest activity in view.
-      var lastActive = levels.search(/[1-4][0]*$/);
-      var lastCol = lastActive < 0 ? weeks : Math.floor((lead + lastActive) / 7) + 1;
-      var scale = scroller.scrollWidth / width;
-      scroller.scrollLeft = Math.max(0, (LEFT + (lastCol + 2) * PITCH) * scale - scroller.clientWidth);
 
-      yearTotal.textContent =
-        y.total + " contributions in " + y.year + (y.label ? " " + y.label : "") +
-        ", on " + active + " different days";
+      var lastActive = levels.search(/[1-4]0*$/);
+      var lastCol = lastActive < 0 ? weeks - 1 : Math.floor((lead + lastActive) / 7);
+      latestX = Math.min(width, (lastCol + 3) * PITCH);
+      scrollToLatest();
+
+      yearTotal.textContent = y.total + " contributions in " + y.year + (y.label ? " " + y.label : "");
 
       each(".activity-tabs .filter", function (btn) {
         btn.setAttribute("aria-pressed", String(btn.getAttribute("data-year") === String(y.year)));
@@ -404,6 +415,16 @@
     });
     if (years.length < 2) tabs.hidden = true;
     draw(years[0]);
+
+    if ("ResizeObserver" in window) {
+      var lastWidth = scroller.clientWidth;
+      new ResizeObserver(function () {
+        if (scroller.clientWidth !== lastWidth) {
+          lastWidth = scroller.clientWidth;
+          scrollToLatest();
+        }
+      }).observe(scroller);
+    }
   }
 
   // ---------- Education & certifications ----------
