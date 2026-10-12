@@ -298,6 +298,7 @@ a:hover {
 
 .theme-toggle,
 .nav-toggle {
+  flex: none;
   display: grid;
   place-items: center;
   width: 40px;
@@ -1018,7 +1019,7 @@ a:hover {
   margin-top: 5px;
 }
 
-/* Commit history */
+/* GitHub activity */
 .activity-card {
   padding: 26px 28px 20px;
   border: 1px solid var(--border);
@@ -1264,7 +1265,7 @@ a:hover {
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 960px) {
   .nav-toggle {
     display: grid;
   }
@@ -1292,6 +1293,9 @@ a:hover {
   .nav-menu .btn {
     margin: 8px 0 0;
   }
+}
+
+@media (max-width: 820px) {
   .brand-name {
     display: none;
   }
@@ -1391,8 +1395,16 @@ a:hover {
     overflow: visible;
   }
   .heatmap {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
+  }
+  .heatmap text {
+    visibility: visible !important;
+  }
+  .project-links a {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .heatmap-days {
     display: none;
@@ -1406,6 +1418,7 @@ a:hover {
     break-inside: avoid;
   }
   .section-head {
+    break-inside: avoid;
     break-after: avoid;
   }
   .site-header,

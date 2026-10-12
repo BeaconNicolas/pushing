@@ -83,7 +83,7 @@ window.PORTFOLIO = {
     highlights: [
       {
         period: "Oct 2026",
-        text: "5 commits and a pull request (+672 lines) to the pipeline's Terraform infrastructure, including a new SQS queue.",
+        text: "5 commits and a pull request (+672 lines) to the Terraform infrastructure of the MILP optimisation pipeline I own, including a new SQS queue.",
       },
       {
         period: "Dec 2025",

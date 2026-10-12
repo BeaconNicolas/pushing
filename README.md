@@ -34,6 +34,7 @@ Everything you'd want to change is in **`js/content.js`**. You can edit it right
 - **Add a photo:** upload it to `assets/` (for example `photo.jpg`) and set `photo: "assets/photo.jpg"`. Without one, your initials are shown.
 - **Add a project:** copy one `{ ... }` block in `projects`, paste it after a comma, and edit it. Filter buttons are created from each project's `category`.
 - **Hide something:** set a text field to `""`, or delete a list item.
+- **Update the GitHub activity graph:** the `activity` block holds one digit per day (0–4) copied from your BMW GitHub contribution graph, plus the yearly totals. Take a new screenshot of the graph and ask Claude to re-read it, or edit the digits and totals yourself.
 
 The page title and link-preview text (what LinkedIn or WhatsApp shows when you paste your link) live in the `<head>` of `index.html`.
 

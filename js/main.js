@@ -269,7 +269,14 @@
   function renderActivity(info, box) {
     var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    var LEVEL_NAMES = ["no contributions", "low activity", "medium activity", "high activity", "very high activity"];
+    // GitHub's colour levels are relative to the account's own busiest days, so name them as levels.
+    var LEVEL_NAMES = [
+      "no contributions",
+      "contribution level 1 of 4",
+      "contribution level 2 of 4",
+      "contribution level 3 of 4",
+      "contribution level 4 of 4 (busiest)",
+    ];
     // Fixed pixel sizes (like GitHub) so labels stay readable and the legend matches the cells.
     var CELL = 12;
     var PITCH = 15;
@@ -334,10 +341,22 @@
     }
 
     var latestX = 0;
+    var monthLabels = [];
+
+    // Hide any month label whose start has scrolled out of view, so no sliver shows at the edge.
+    function hideClippedMonths() {
+      var left = scroller.scrollLeft;
+      monthLabels.forEach(function (t) {
+        t.style.visibility = Number(t.getAttribute("x")) < left - 0.5 ? "hidden" : "";
+      });
+    }
+    scroller.addEventListener("scroll", hideClippedMonths, { passive: true });
 
     // On narrow screens the graph scrolls sideways; keep the latest activity in view.
     function scrollToLatest() {
       scroller.scrollLeft = Math.max(0, latestX - scroller.clientWidth);
+      hideClippedMonths();
+      if (window.requestAnimationFrame) requestAnimationFrame(hideClippedMonths);
     }
 
     function draw(y) {
@@ -357,6 +376,7 @@
       });
 
       // Month labels go above the first week that starts in that month, as on GitHub.
+      monthLabels = [];
       var lastLabelCol = -9;
       for (var m = 0; m < 12; m++) {
         var dayIndex = Math.round((Date.UTC(y.year, m, 1) - jan1) / 86400000);
@@ -366,6 +386,7 @@
         var label = svg("text", { x: col * PITCH, y: 11, class: "heatmap-label" });
         label.textContent = MONTHS[m];
         svgEl.appendChild(label);
+        monthLabels.push(label);
         lastLabelCol = col;
       }
 
@@ -486,17 +507,18 @@
     each('.nav-menu a[href^="#"]', function (a) {
       navLinks[a.getAttribute("href").slice(1)] = a;
     });
+    var inBand = {};
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          var link = navLinks[entry.target.id];
-          if (!link) return;
-          if (entry.isIntersecting) {
-            Object.keys(navLinks).forEach(function (id) {
-              navLinks[id].classList.remove("is-active");
-            });
-            link.classList.add("is-active");
-          }
+          inBand[entry.target.id] = entry.isIntersecting;
+        });
+        var current = Object.keys(navLinks).filter(function (id) {
+          return inBand[id];
+        }).pop();
+        if (!current) return;
+        Object.keys(navLinks).forEach(function (id) {
+          navLinks[id].classList.toggle("is-active", id === current);
         });
       },
       { rootMargin: "-45% 0px -50% 0px" }
