@@ -235,16 +235,16 @@ window.PORTFOLIO = {
       links: [],
     },
     {
-      title: "Lending Club Loan Repayment Prediction",
+      title: "Lending Club Credit Policy Classification",
       category: "Machine Learning",
       context: "Deviare",
       year: "2023",
       summary:
-        "Predicted whether a borrower would fully repay their loan, using 9,578 Lending Club loan records.",
+        "Classified whether borrowers meet Lending Club's credit-underwriting criteria, using 9,578 loan records.",
       points: [
-        "Used chi-square tests to check which features relate to repayment, and VIF to catch multicollinearity.",
-        "Compared Logistic Regression, a Random Forest tuned with GridSearchCV, and a deep Keras/TensorFlow network with early stopping.",
-        "One-hot encoded loan purpose and scaled features before training.",
+        "Screened features with t-tests and chi-square tests, and checked multicollinearity with VIF.",
+        "Compared Logistic Regression (91% test accuracy) with a Random Forest tuned by GridSearchCV (99%).",
+        "Built a deep Keras/TensorFlow network with early stopping.",
       ],
       tags: ["Python", "TensorFlow", "Keras", "scikit-learn"],
       links: [
@@ -260,13 +260,13 @@ window.PORTFOLIO = {
       context: "Deviare",
       year: "2023",
       summary:
-        "Predicted how long a car spends on the test bench from about 380 anonymised configuration features. Shorter testing means lower CO₂ emissions.",
+        "Prepared about 380 anonymised car-configuration features for predicting test-bench time. Shorter testing means lower CO₂ emissions.",
       points: [
         "Removed zero-variance features and label-encoded the categorical columns.",
-        "Reduced dimensionality with PCA after standardising the data.",
-        "Trained an XGBoost regression model to predict test time.",
+        "Standardised the data and reduced its dimensionality with PCA.",
+        "Set up XGBoost and linear regression models on the prepared features.",
       ],
-      tags: ["Python", "XGBoost", "PCA", "scikit-learn"],
+      tags: ["Python", "PCA", "XGBoost", "scikit-learn"],
       links: [
         {
           label: "Write-up",
@@ -280,13 +280,13 @@ window.PORTFOLIO = {
       context: "Deviare",
       year: "2023",
       summary:
-        "Grouped Rolling Stones tracks into cohorts using Spotify audio features, to support better song recommendations.",
+        "Explored Spotify audio features for Rolling Stones tracks as the groundwork for grouping songs into cohorts for recommendations.",
       points: [
         "Removed duplicates and IQR outliers, then explored popularity, albums and audio features.",
-        "Standardised the features and used PCA to reduce dimensionality.",
-        "Chose the number of clusters, ran K-Means and described what defines each cohort.",
+        "Modelled popularity from danceability and energy with OLS regression.",
+        "Standardised the features and used the elbow method to pick the number of K-Means clusters.",
       ],
-      tags: ["Python", "K-Means", "PCA", "scikit-learn"],
+      tags: ["Python", "pandas", "statsmodels", "K-Means"],
       links: [
         {
           label: "Code",
@@ -303,7 +303,7 @@ window.PORTFOLIO = {
         "Cleaned and analysed 364,558 NYC 311 service requests to see how quickly the city closes different kinds of complaints.",
       points: [
         "Cleaned 53 columns of messy public data, handling missing values and duplicates.",
-        "Engineered a request-closing-time feature and ranked complaint types by average closing time per borough.",
+        "Engineered a request-closing-time feature and ranked complaint types by average closing time at each location.",
         "Used ANOVA and chi-square tests to check whether response times really differ across complaint types and locations.",
       ],
       tags: ["Python", "pandas", "SciPy", "Matplotlib"],
@@ -324,7 +324,7 @@ window.PORTFOLIO = {
       points: [
         "Treated missing values and measured the skewness and distribution of every numeric variable.",
         "Picked significant variables with a correlation matrix and chi-square p-values.",
-        "Split numeric and categorical variables and combined the significant ones into a model-ready dataset.",
+        "Separated numeric and categorical variables and recombined them into one dataset for modelling.",
       ],
       tags: ["Python", "pandas", "Seaborn", "SciPy"],
       links: [
@@ -340,10 +340,10 @@ window.PORTFOLIO = {
       context: "Deviare",
       year: "2023",
       summary:
-        "Tableau dashboards and map visualisations comparing growth across dozens of countries.",
+        "An interactive Tableau dashboard comparing growth, income groups and trends over time across dozens of countries.",
       points: [
-        "Built map, bar and trend views so countries can be compared at a glance.",
-        "Used colour and filters to highlight positive and negative growth.",
+        "Combined growth maps, an income-group map and trend lines in one dashboard.",
+        "Added filters for country, income group and year so viewers can explore it themselves.",
       ],
       tags: ["Tableau", "Dashboards", "Maps"],
       links: [
