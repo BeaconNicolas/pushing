@@ -9,7 +9,8 @@
       content="Portfolio of Beacon Nicolas Mkhabele, Data Scientist at BMW IT Hub South Africa, working across Python, mathematical optimisation, AWS, Terraform and CI/CD."
     />
     <meta name="author" content="Beacon Nicolas Mkhabele" />
-    <meta name="theme-color" content="#0f766e" />
+    <meta name="theme-color" content="#0a0d12" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f8fb" media="(prefers-color-scheme: light)" />
 
     <!-- Link previews (LinkedIn, WhatsApp, email). If you move the site, update the URLs below. -->
     <meta property="og:type" content="website" />
@@ -43,8 +44,10 @@
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true"></div>
 
     <header class="site-header">
+      <div class="scroll-progress" aria-hidden="true"></div>
       <nav class="nav container" aria-label="Main">
         <a class="brand" href="#top" aria-label="Back to top">
           <span class="brand-mark" data-bind="initials">BM</span>
@@ -59,7 +62,7 @@
         <div class="nav-menu" id="nav-menu">
           <a href="#about">About</a>
           <a href="#experience">Experience</a>
-          <a href="#activity">Activity</a>
+          <a href="#work">Work</a>
           <a href="#projects">Projects</a>
           <a href="#skills">Skills</a>
           <a href="#education">Education</a>
@@ -84,47 +87,89 @@
     </header>
 
     <main id="main">
-      <section class="hero container" id="top">
-        <div class="hero-text">
-          <p class="status"><span class="status-dot" aria-hidden="true"></span><span data-bind="availability"></span></p>
-          <p class="eyebrow" data-bind="role"></p>
-          <h1 data-bind="name">Beacon Nicolas Mkhabele</h1>
-          <p class="lede" data-bind="tagline"></p>
-          <p class="hero-location">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2" />
-              <circle cx="12" cy="9.5" r="2.5" fill="currentColor" />
-            </svg>
-            <span data-bind="location"></span>
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#projects">View my projects</a>
-            <a class="btn" data-resume hidden download>Download CV</a>
-            <a class="btn" data-link="linkedin" hidden target="_blank" rel="noopener">LinkedIn</a>
-            <a class="btn btn-ghost" data-link="github" hidden target="_blank" rel="noopener">GitHub</a>
+      <section class="hero-band" id="top">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero container">
+          <div class="hero-text">
+            <p class="status"><span class="status-dot" aria-hidden="true"></span><span data-bind="availability"></span></p>
+            <p class="eyebrow" data-bind="role"></p>
+            <h1 data-bind="name">Beacon Nicolas Mkhabele</h1>
+            <p class="lede" data-bind="tagline"></p>
+            <p class="hero-location">
+              <span data-icon="map-pin"></span>
+              <span data-bind="location"></span>
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-shine" href="#work">See my work <span data-icon="arrow-right"></span></a>
+              <button class="btn btn-copy" type="button" data-copy-email hidden>
+                <span data-icon="copy"></span><span>Copy email</span>
+                <span class="tooltip" aria-hidden="true">Copied to clipboard!</span>
+              </button>
+              <a class="btn" data-link="linkedin" hidden target="_blank" rel="noopener"><span data-icon="linkedin"></span>LinkedIn</a>
+              <a class="btn" data-link="github" hidden target="_blank" rel="noopener"><span data-icon="github"></span>GitHub</a>
+              <a class="btn btn-ghost" data-resume hidden download><span data-icon="download"></span>CV</a>
+            </div>
+            <p class="sr-only" aria-live="polite" data-copy-status></p>
           </div>
-        </div>
 
-        <figure class="plot-card" aria-labelledby="plot-caption">
-          <div class="plot-head">
-            <span class="plot-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <code>kmeans.fit(data)</code>
-            <button class="plot-run" type="button">Run again</button>
-          </div>
-          <svg class="plot" viewBox="0 0 400 280" role="img" aria-label="Animated k-means clustering of sample points into three groups">
-            <g class="plot-grid" aria-hidden="true"></g>
-            <g class="plot-points"></g>
-            <g class="plot-centroids"></g>
-          </svg>
-          <figcaption id="plot-caption" class="plot-foot">
-            <span>k = 3</span>
-            <span class="plot-status" aria-live="polite">iteration 0</span>
-          </figcaption>
-        </figure>
+          <figure class="lab glass" aria-label="Interactive demos">
+            <div class="lab-head">
+              <span class="plot-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <div class="lab-tabs" role="tablist" aria-label="Choose a demo">
+                <button class="lab-tab" role="tab" type="button" id="tab-cluster" aria-controls="panel-cluster" aria-selected="true">
+                  k-means
+                </button>
+                <button class="lab-tab" role="tab" type="button" id="tab-pipeline" aria-controls="panel-pipeline" aria-selected="false" tabindex="-1">
+                  AWS pipeline
+                </button>
+              </div>
+            </div>
+
+            <div class="lab-panel" id="panel-cluster" role="tabpanel" aria-labelledby="tab-cluster">
+              <div class="lab-stage">
+                <svg class="plot" viewBox="0 0 400 280" role="img" aria-label="Interactive k-means clustering of sample points. Click the plot to add a point.">
+                  <g class="plot-grid" aria-hidden="true"></g>
+                  <g class="plot-points"></g>
+                  <g class="plot-centroids"></g>
+                </svg>
+              </div>
+              <div class="lab-controls">
+                <div class="seg" role="group" aria-label="Number of clusters, k">
+                  <span class="seg-label" aria-hidden="true">k</span>
+                  <button type="button" data-k="2" aria-pressed="false">2</button>
+                  <button type="button" data-k="3" aria-pressed="true">3</button>
+                  <button type="button" data-k="4" aria-pressed="false">4</button>
+                  <button type="button" data-k="5" aria-pressed="false">5</button>
+                </div>
+                <button class="lab-btn" type="button" data-act="data"><span data-icon="shuffle"></span>New data</button>
+                <button class="lab-btn lab-btn-accent" type="button" data-act="run"><span data-icon="play"></span>Run</button>
+              </div>
+              <p class="lab-foot">
+                <span class="plot-status" aria-live="polite">iteration 0</span>
+                <span class="plot-inertia"></span>
+                <span class="lab-hint">click the plot to add points</span>
+              </p>
+            </div>
+
+            <div class="lab-panel" id="panel-pipeline" role="tabpanel" aria-labelledby="tab-pipeline" hidden>
+              <div class="lab-stage">
+                <svg class="pipe" viewBox="0 0 400 280" role="img" aria-label="Simulated event-driven solve pipeline: an upload to S3 triggers a Lambda, which queues a job on SQS for a containerised MILP solver that writes results back to S3."></svg>
+              </div>
+              <div class="lab-controls">
+                <button class="lab-btn lab-btn-accent" type="button" data-act="trigger"><span data-icon="upload"></span>Upload input</button>
+                <button class="lab-btn" type="button" data-act="auto" aria-pressed="false"><span data-icon="repeat"></span>Auto-run</button>
+              </div>
+              <p class="lab-foot">
+                <span class="pipe-status" aria-live="polite">idle</span>
+                <span class="lab-hint">illustrative simulation</span>
+              </p>
+            </div>
+          </figure>
+        </div>
       </section>
 
       <section class="container" aria-label="Highlights">
-        <ul class="stats" data-render="stats"></ul>
+        <ul class="stats glass" data-render="stats"></ul>
       </section>
 
       <section class="section container" id="about">
@@ -134,7 +179,7 @@
         </div>
         <div class="about">
           <div class="about-text" data-render="about"></div>
-          <aside class="about-card">
+          <aside class="about-card glass">
             <div class="avatar" data-render="avatar"></div>
             <dl class="facts" data-render="facts"></dl>
           </aside>
@@ -149,20 +194,26 @@
         <ol class="jobs" data-render="experience"></ol>
       </section>
 
-      <section class="section container" id="activity">
+      <section class="section container" id="work">
         <div class="section-head">
           <p class="section-kicker">03</p>
-          <h2>GitHub activity at BMW IT Hub</h2>
-          <p class="section-sub" data-render="activity-note"></p>
+          <h2>Selected work</h2>
+          <p class="section-sub">The pipeline I own at BMW IT Hub, the numbers behind it, and my commit activity there.</p>
         </div>
-        <div class="activity" data-render="activity"></div>
+        <div class="bento">
+          <article class="tile tile-featured glass" data-render="featured"></article>
+          <div class="tile tile-telemetry glass" data-render="telemetry"></div>
+          <div class="tile tile-activity glass" id="activity" data-render="activity"></div>
+          <div class="tile tile-terminal" data-render="terminal"></div>
+          <div class="tile tile-commits glass" data-render="commits"></div>
+        </div>
       </section>
 
       <section class="section container" id="projects">
         <div class="section-head">
           <p class="section-kicker">04</p>
           <h2>Projects</h2>
-          <p class="section-sub">Highlights from my work at BMW IT Hub (internal, so no code links) and projects from my data science training.</p>
+          <p class="section-sub">More from my work at BMW IT Hub (internal, so no code links) and projects from my data science training.</p>
         </div>
         <div class="filters" role="group" aria-label="Filter projects by category" data-render="filters"></div>
         <div class="projects" data-render="projects"></div>
@@ -188,13 +239,13 @@
           </div>
           <div>
             <h3 class="col-title">Certifications</h3>
-            <ul class="certs" data-render="certifications"></ul>
+            <ul class="certs glass" data-render="certifications"></ul>
           </div>
         </div>
       </section>
 
       <section class="section container" id="contact">
-        <div class="contact">
+        <div class="contact glass">
           <div>
             <p class="section-kicker">07</p>
             <h2>Let's talk</h2>
@@ -203,10 +254,10 @@
             </p>
           </div>
           <div class="contact-actions">
-            <a class="btn btn-primary btn-large" data-link="email" hidden>Email me</a>
-            <a class="btn btn-large" data-link="linkedin" hidden target="_blank" rel="noopener">Message on LinkedIn</a>
-            <a class="btn btn-large" data-resume hidden download>Download CV</a>
-            <a class="btn btn-ghost btn-large" data-link="github" hidden target="_blank" rel="noopener">See my GitHub</a>
+            <a class="btn btn-primary btn-large btn-shine" data-link="email" hidden><span data-icon="mail"></span>Email me</a>
+            <a class="btn btn-large" data-link="linkedin" hidden target="_blank" rel="noopener"><span data-icon="linkedin"></span>Message on LinkedIn</a>
+            <a class="btn btn-large" data-resume hidden download><span data-icon="download"></span>Download CV</a>
+            <a class="btn btn-ghost btn-large" data-link="github" hidden target="_blank" rel="noopener"><span data-icon="github"></span>See my GitHub</a>
           </div>
         </div>
       </section>
@@ -216,6 +267,8 @@
       <p>© <span data-bind="year"></span> <span data-bind="name">Beacon Nicolas Mkhabele</span></p>
       <a href="#top">Back to top ↑</a>
     </footer>
+
+    <div class="cell-tip" role="presentation" hidden></div>
 
     <noscript>
       <p class="container">This site needs JavaScript to show its content. Please enable it and reload.</p>
