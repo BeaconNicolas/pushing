@@ -37,6 +37,69 @@ window.PORTFOLIO = {
     { value: "AWS", label: "Certified Cloud Practitioner" },
   ],
 
+  // "At a glance" tile in the Selected work grid. Numbers count up when shown.
+  // Keep these factual: recruiters read them as claims.
+  telemetry: [
+    { value: "4", label: "AWS accounts in the multi-account design (Dev, INT, Prod, Tooling)" },
+    { value: "3", label: "environments the MILP pipeline deploys to" },
+    { value: "+672", label: "lines in my latest Terraform pull request (Oct 2026)" },
+  ],
+
+  // Code tile in the Selected work grid. `lang` is "python" or "hcl" (Terraform).
+  // These are small examples written for this site, not BMW code.
+  snippets: {
+    note: "Illustrative examples written for this site (the Python uses the open-source PuLP library), not BMW code.",
+    files: [
+      {
+        file: "toy_milp.py",
+        lang: "python",
+        code: [
+          "import pulp",
+          "",
+          "model = pulp.LpProblem(\"allocation\", pulp.LpMinimize)",
+          "x = pulp.LpVariable.dicts(\"x\", (plants, parts), lowBound=0, cat=\"Integer\")",
+          "is_open = pulp.LpVariable.dicts(\"open\", plants, cat=\"Binary\")",
+          "",
+          "# Production cost plus the fixed cost of opening a plant",
+          "model += pulp.lpSum(cost[p][k] * x[p][k] for p in plants for k in parts) \\",
+          "    + pulp.lpSum(fixed[p] * is_open[p] for p in plants)",
+          "",
+          "for k in parts:  # meet demand for every part",
+          "    model += pulp.lpSum(x[p][k] for p in plants) >= demand[k]",
+          "for p in plants:  # only produce in plants that are open",
+          "    model += pulp.lpSum(x[p][k] for k in parts) <= capacity[p] * is_open[p]",
+          "",
+          "model.solve(pulp.PULP_CBC_CMD(msg=False))",
+          "print(pulp.LpStatus[model.status], pulp.value(model.objective))",
+        ].join("\n"),
+      },
+      {
+        file: "queue.tf",
+        lang: "hcl",
+        code: [
+          "# Buffer solve requests between the trigger and the solver",
+          "resource \"aws_sqs_queue\" \"solve_requests\" {",
+          "  name                       = \"${var.prefix}-solve-requests\"",
+          "  visibility_timeout_seconds = 900",
+          "",
+          "  redrive_policy = jsonencode({",
+          "    deadLetterTargetArn = aws_sqs_queue.solve_dlq.arn",
+          "    maxReceiveCount     = 3",
+          "  })",
+          "",
+          "  tags = local.common_tags",
+          "}",
+          "",
+          "resource \"aws_lambda_event_source_mapping\" \"solver\" {",
+          "  event_source_arn = aws_sqs_queue.solve_requests.arn",
+          "  function_name    = aws_lambda_function.solver.arn",
+          "  batch_size       = 1",
+          "}",
+        ].join("\n"),
+      },
+    ],
+  },
+
   about: [
     "I'm a data scientist at BMW IT Hub South Africa in Pretoria, where I own a multi-step AWS pipeline that solves mixed-integer linear programming (MILP) models. I joined BMW IT Hub as a data science graduate in 2024 and spent nearly two years on the DevOps and AWS side, so I don't stop at the model: I also build the Terraform infrastructure, CI/CD pipelines and multi-account AWS setup that keep it running in production.",
     "My foundation is mathematical, with a BSc in Applied Mathematics and Mathematical Statistics from Rhodes University. I also spent a year and a half as an instructional specialist on 2U's data analytics and machine learning boot camps, mentoring students and grading their work in Python, machine learning, deep learning and Tableau.",
@@ -98,6 +161,14 @@ window.PORTFOLIO = {
       org: "BMW IT Hub South Africa",
       place: "Pretoria",
       period: "Jan 2024 – Present",
+      // Optional short pills under the company name. `badge` (optional) replaces the initials.
+      badge: "BMW",
+      impact: [
+        "Owner of a production MILP pipeline",
+        "Multi-account AWS: Dev · INT · Prod · Tooling",
+        "Terraform infrastructure as code",
+        "CI/CD across 3 environments",
+      ],
       roles: [
         {
           title: "Data Scientist",
@@ -147,6 +218,7 @@ window.PORTFOLIO = {
       org: "2U",
       place: "Cape Town",
       period: "Sep 2023 – Mar 2025",
+      impact: ["Two boot camps: ML & AI, Data Analytics", "Mentoring, feedback & grading"],
       roles: [
         {
           title: "Machine Learning and Artificial Intelligence Instructional Specialist",
@@ -170,6 +242,7 @@ window.PORTFOLIO = {
       org: "Deviare",
       place: "Johannesburg",
       period: "May 2023 – Jan 2024",
+      impact: ["6 hands-on projects", "Data and AI Master's Program certificate"],
       roles: [
         {
           title: "Digital Skills Training for Data Science",
@@ -216,9 +289,13 @@ window.PORTFOLIO = {
 
   // category must match one of the filter buttons: they are created automatically.
   // context + year appear at the top right of each card.
+  // `featured: true` puts a project in the large tile of the Selected work grid
+  // (only the first featured one is used). `flow` is an optional row of stages shown on it.
   projects: [
     {
       title: "MILP Optimisation Pipeline on AWS",
+      featured: true,
+      flow: ["Development", "Integration", "Production"],
       category: "Optimisation",
       context: "BMW IT Hub",
       year: "2026",
@@ -396,9 +473,12 @@ window.PORTFOLIO = {
     },
   ],
 
+  // `tag` is the small category pill. Well-known tools (Python, Terraform, Docker…) get
+  // their logo automatically; anything else gets a simple matching icon or none.
   skills: [
     {
       group: "Data science & optimisation",
+      tag: "Optimisation & Modelling",
       items: [
         "Python",
         "Mixed-integer linear programming",
@@ -411,6 +491,7 @@ window.PORTFOLIO = {
     },
     {
       group: "Machine learning",
+      tag: "Machine Learning",
       items: [
         "scikit-learn",
         "Regression & classification",
@@ -422,18 +503,22 @@ window.PORTFOLIO = {
     },
     {
       group: "Deep learning",
+      tag: "Deep Learning",
       items: ["TensorFlow", "Keras", "CNNs", "RNNs", "Autoencoders"],
     },
     {
       group: "AWS",
+      tag: "Cloud",
       items: ["Glue", "Lambda", "S3", "ECR", "IAM & cross-account roles", "Cloud9", "Multi-account architecture"],
     },
     {
       group: "DevOps & engineering",
+      tag: "IaC & MLOps",
       items: ["Terraform", "CI/CD pipelines", "Docker", "Git", "Linux / WSL (Ubuntu)", "Angular"],
     },
     {
       group: "Data & visualisation",
+      tag: "Data & BI",
       items: ["SQL", "MongoDB", "Tableau", "Matplotlib", "Seaborn", "Excel automation"],
     },
   ],

@@ -52,7 +52,9 @@ python3 -m http.server 8000
 - Responsive, from phones to wide screens
 - Light and dark themes (follows the visitor's system setting, with a toggle)
 - Project filters by category
-- A live k-means clustering demo in the intro
+- An interactive lab in the intro: k-means clustering (choose k, new data, click to add points) and a simulated AWS solve pipeline
+- A "Selected work" bento grid: featured project (`featured: true`), an "At a glance" tile (`telemetry`), a code tile (`snippets`) and the contribution graph with hover tooltips
+- Tech logos on skills and tags (Devicon SVGs in `assets/icons`, matched by name), category pills (`tag`), and impact pills on each job (`impact`)
 - Clean print layout, in case a recruiter prints the page
 - Link-preview image and meta tags for LinkedIn, WhatsApp and email
 - Accessible: keyboard navigation, skip link, reduced-motion support
