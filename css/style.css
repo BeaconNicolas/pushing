@@ -1465,6 +1465,170 @@ a:hover {
   grid-column: span 2;
 }
 
+/* Build guide tile: links to the interactive guide in cicd/ */
+.tile-guide {
+  grid-column: span 6;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  background:
+    radial-gradient(90% 120% at 0% 100%, color-mix(in srgb, #d97706 10%, transparent), transparent 60%),
+    var(--glass);
+}
+
+.guide-title {
+  margin-top: 6px;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.guide-summary {
+  max-width: 40em;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.guide-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-stats li {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.guide-stats strong {
+  color: var(--text);
+  font: 700 22px/1 var(--font-display);
+}
+
+.guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.guide-visual {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.guide-visual:hover {
+  border-color: color-mix(in srgb, #d97706 45%, var(--glass-border));
+  transform: translateY(-2px);
+}
+
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-steps li {
+  --gs: #d97706;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.guide-steps li.gs-github {
+  --gs: #64748b;
+}
+
+:root[data-theme="dark"] .guide-steps li {
+  --gs: #f59e0b;
+}
+
+:root[data-theme="dark"] .guide-steps li.gs-github {
+  --gs: #94a3b8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .guide-steps li {
+    --gs: #f59e0b;
+  }
+  :root:not([data-theme="light"]) .guide-steps li.gs-github {
+    --gs: #94a3b8;
+  }
+}
+
+.gs-num {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--gs);
+  border-radius: 50%;
+  color: var(--gs);
+  font: 700 14px/1 var(--font-display);
+  animation: gs-pulse 6.4s var(--ease) infinite;
+  animation-delay: calc(var(--i) * 0.8s);
+}
+
+.gs-name {
+  font: 600 13px/1.2 var(--font-display);
+}
+
+@keyframes gs-pulse {
+  0%,
+  10% {
+    background: var(--gs);
+    color: #fff;
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--gs) 22%, transparent);
+  }
+  16%,
+  100% {
+    background: transparent;
+    color: var(--gs);
+    box-shadow: none;
+  }
+}
+
+.guide-visual-caption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .tile-guide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-num {
+    animation: none;
+  }
+  .guide-visual {
+    transition: none;
+  }
+}
+
 .tile-label {
   display: inline-flex;
   align-items: center;

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Terraform CI/CD on AWS · Build guide · Beacon Nicolas Mkhabele</title>
+    <meta
+      name="description"
+      content="An interactive build guide: how a merge to dev, int or prod becomes a reviewed, approved Terraform apply on AWS, with GitHub OIDC, CodePipeline and least-privilege IAM roles."
+    />
+    <meta name="author" content="Beacon Nicolas Mkhabele" />
+    <meta name="theme-color" content="#0a0d12" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f8fb" media="(prefers-color-scheme: light)" />
+
+    <!-- Link previews (LinkedIn, WhatsApp, email). -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Terraform CI/CD on AWS with a GitHub trigger · Build guide" />
+    <meta
+      property="og:description"
+      content="How a merge becomes a reviewed, approved Terraform apply: GitHub OIDC, one CodePipeline per environment, a manual approval and no long-lived AWS keys."
+    />
+    <meta property="og:url" content="https://beaconnicolas.github.io/pushing/cicd/" />
+    <meta property="og:image" content="https://beaconnicolas.github.io/pushing/cicd/og-guide.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="guide.css" />
+
+    <!-- Same saved theme as the rest of the site, applied before first paint. -->
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="guide-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="ambient" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="scroll-progress" aria-hidden="true"></div>
+      <nav class="nav container" aria-label="Guide">
+        <a class="brand" href="../" aria-label="Back to the portfolio">
+          <span class="brand-mark">BM</span>
+          <span class="brand-name">Beacon Nicolas Mkhabele</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">Menu</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#run">Pipeline</a>
+          <a href="#roles">IAM roles</a>
+          <a href="#build">Build it</a>
+          <a href="#problems">Problems</a>
+          <a href="#tradeoffs">Trade-offs</a>
+          <a class="btn btn-small btn-primary" data-pdf download><span data-icon="download"></span>PDF</a>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Switch colour theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2" />
+            <path
+              d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="g-hero container" id="top">
+        <a class="g-back" href="../#work"><span data-icon="arrow-left"></span>Back to the portfolio</a>
+        <p class="eyebrow">Build guide · Infrastructure as code</p>
+        <h1>Terraform CI/CD on AWS <span class="g-h1-light">with a GitHub trigger</span></h1>
+        <p class="lede g-lede">
+          How a merge to <code>dev</code>, <code>int</code> or <code>prod</code> becomes a reviewed, approved Terraform apply,
+          and how to build the same pipeline for your own project.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#run"><span data-icon="play"></span>Run the pipeline</a>
+          <a class="btn" data-pdf download><span data-icon="download"></span>Download the PDF</a>
+        </div>
+        <p class="g-byline" data-render="byline"></p>
+        <ul class="stats glass g-stats" data-render="stats"></ul>
+      </section>
+
+      <section class="section container" id="summary">
+        <div class="section-head">
+          <p class="section-kicker">01</p>
+          <h2>What it does and why</h2>
+        </div>
+        <div class="g-summary" data-render="summary"></div>
+        <div class="g-reasons" data-render="reasons"></div>
+        <h3 class="g-h3">The accounts involved</h3>
+        <div class="g-accounts glass" data-render="accounts"></div>
+      </section>
+
+      <section class="section container" id="run">
+        <div class="section-head">
+          <p class="section-kicker">02</p>
+          <h2>Run the pipeline</h2>
+          <p class="section-sub">
+            Press Run to watch one run from merge to apply, or click any step. Switch the environment to see the names change,
+            and try what happens when a reviewer rejects or the plan wants to destroy something.
+          </p>
+        </div>
+        <div class="sim glass" data-render="sim"></div>
+      </section>
+
+      <section class="section container" id="roles">
+        <div class="section-head">
+          <p class="section-kicker">03</p>
+          <h2>Who assumes whom</h2>
+          <p class="section-sub">
+            Five role types. Four live in the CI/CD account and exist once per environment. The deployer role lives in each
+            target account. Each role trusts exactly one kind of principal.
+          </p>
+        </div>
+        <div class="roles glass" data-render="roles"></div>
+        <div class="g-reasons g-reasons-3" data-render="rules"></div>
+        <div class="g-notes" data-render="role-notes"></div>
+      </section>
+
+      <section class="section container" id="build">
+        <div class="section-head">
+          <p class="section-kicker">04</p>
+          <h2>Build it from scratch</h2>
+          <p class="section-sub">Nine steps, from prerequisites to promotion. Tick them off as you go; your progress stays in this browser.</p>
+        </div>
+        <div data-render="build"></div>
+      </section>
+
+      <section class="section container" id="problems">
+        <div class="section-head">
+          <p class="section-kicker">05</p>
+          <h2>What went wrong while building it</h2>
+          <p class="section-sub">All seven came up while building the original setup and were fixed as shown.</p>
+        </div>
+        <div data-render="problems"></div>
+      </section>
+
+      <section class="section container" id="tradeoffs">
+        <div class="section-head">
+          <p class="section-kicker">06</p>
+          <h2>What it gains and what it costs</h2>
+          <p class="section-sub">The design keeps every credential short-lived and inside AWS. The price is a second CI system next to GitHub Actions.</p>
+        </div>
+        <div data-render="tradeoffs"></div>
+      </section>
+
+      <section class="section container" id="terms">
+        <div class="section-head">
+          <p class="section-kicker">07</p>
+          <h2>Terms used in this guide</h2>
+        </div>
+        <dl class="g-terms" data-render="terms"></dl>
+      </section>
+
+      <section class="section container">
+        <div class="contact glass g-end">
+          <div>
+            <h2>Take it with you</h2>
+            <p class="contact-text">The full guide as an 11-page PDF, with every diagram and table.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn btn-primary btn-large" data-pdf download><span data-icon="download"></span>Download the PDF</a>
+            <a class="btn btn-large" href="../"><span data-icon="arrow-left"></span>Back to the portfolio</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <p>© <span data-render="year"></span> Beacon Nicolas Mkhabele</p>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <script src="guide-data.js"></script>
+    <script src="guide.js"></script>
+  </body>
+</html>

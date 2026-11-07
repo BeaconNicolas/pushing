@@ -289,6 +289,32 @@ window.PORTFOLIO = {
 
   // category must match one of the filter buttons: they are created automatically.
   // context + year appear at the top right of each card.
+  // The interactive build guide (its own page in cicd/, content in cicd/guide-data.js).
+  // Shown as a wide tile in Selected work. Remove this block to hide the tile.
+  guide: {
+    label: "Build guide · Infrastructure as code",
+    title: "Terraform CI/CD on AWS with a GitHub trigger",
+    summary:
+      "A step-by-step guide I wrote, based on the production pipeline I built: how a merge to dev, int or prod becomes a reviewed, approved Terraform apply, with GitHub OIDC, one CodePipeline per environment and no long-lived AWS keys.",
+    steps: [
+      { name: "Merge", lane: "github" },
+      { name: "Upload", lane: "github" },
+      { name: "Trigger", lane: "aws" },
+      { name: "Docker", lane: "aws" },
+      { name: "Maven", lane: "aws" },
+      { name: "Plan", lane: "aws" },
+      { name: "Approve", lane: "aws" },
+      { name: "Apply", lane: "aws" },
+    ],
+    stats: [
+      { value: "3", label: "environments" },
+      { value: "5", label: "IAM role types" },
+      { value: "0", label: "long-lived AWS keys" },
+    ],
+    url: "cicd/",
+    pdf: "assets/docs/terraform-cicd-on-aws-build-guide.pdf",
+  },
+
   // `featured: true` puts a project in the large tile of the Selected work grid
   // (only the first featured one is used). `flow` is an optional row of stages shown on it.
   projects: [

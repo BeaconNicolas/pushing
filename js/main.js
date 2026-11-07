@@ -45,6 +45,7 @@
   // UI icons are Lucide (lucide.dev, ISC licence), inlined so they inherit the text colour.
   var LUCIDE = {
     "arrow-right": '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+    "file-text": '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
     "map-pin": '<path d="M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
     copy: '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
     check: '<path d="M20 6 9 17l-5-5"/>',
@@ -388,6 +389,36 @@
     featuredBox.appendChild(el("div", { className: "project-foot" }, [tagList(featured.tags), linkRow(featured)]));
   } else {
     featuredBox.hidden = true;
+  }
+
+  // ---------- Build guide tile ----------
+  var guide = data.guide;
+  var guideBox = target("guide");
+  if (guide && guideBox) {
+    guideBox.append(
+      el("div", { className: "guide-text" }, [
+        el("p", { className: "tile-label" }, [icon("file-text", 14), document.createTextNode(guide.label)]),
+        el("h3", { className: "guide-title", text: guide.title }),
+        el("p", { className: "guide-summary", text: guide.summary }),
+        el("ul", { className: "guide-stats" }, (guide.stats || []).map(function (s) {
+          return el("li", null, [el("strong", { text: s.value }), el("span", { text: s.label })]);
+        })),
+        el("div", { className: "guide-actions" }, [
+          el("a", { className: "btn btn-primary btn-shine", href: guide.url }, [
+            document.createTextNode("Explore the interactive guide"),
+            icon("arrow-right", 16),
+          ]),
+          guide.pdf ? el("a", { className: "btn", href: guide.pdf, download: "" }, [icon("download", 16), document.createTextNode("PDF")]) : null,
+        ]),
+      ]),
+      el("a", { className: "guide-visual", href: guide.url, "aria-label": "Open the interactive guide: one pipeline run in " + (guide.steps || []).length + " steps" }, [
+        el("ol", { className: "guide-steps" }, (guide.steps || []).map(function (s, i) {
+          return el("li", { className: "gs-" + s.lane, style: "--i:" + i }, [el("span", { className: "gs-num", text: String(i + 1) }), el("span", { className: "gs-name", text: s.name })]);
+        })),
+        el("p", { className: "guide-visual-caption", text: "One run, from merge to apply. Press play in the guide." }),
+      ])
+    );
+    guideBox.hidden = false;
   }
 
   // ---------- Telemetry tile ----------
