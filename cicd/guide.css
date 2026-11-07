@@ -46,13 +46,12 @@
 .tone-aws { --tone: var(--g-aws); --tone-bg: var(--g-aws-bg); }
 .tone-iam { --tone: var(--g-iam); --tone-bg: var(--g-iam-bg); }
 
-/* JetBrains Mono joins ">-" and "->" into one glyph; role names must read literally.
-   font-feature-settings survives the `font` shorthand used below, unlike font-variant-ligatures. */
-.guide-page code,
-.guide-page .dia text,
-.guide-page .sim-console-body,
-.guide-page .chain-pill {
-  font-feature-settings: "calt" 0, "liga" 0;
+/* JetBrains Mono joins ">-" and "->" into one glyph, so "<project>-cicd-dev" would read "<project>→cicd-dev".
+   Role names must read literally. The `font` shorthand used throughout this file resets
+   font-feature-settings, so only !important keeps ligatures off everywhere. */
+.guide-page,
+.guide-page * {
+  font-feature-settings: "calt" 0, "liga" 0 !important;
 }
 
 .guide-page :not(pre) > code {
