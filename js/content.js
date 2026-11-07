@@ -14,9 +14,9 @@ window.PORTFOLIO = {
     initials: "BM",
     role: "Platform Engineer · BMW IT Hub South Africa",
     location: "Pretoria, Gauteng, South Africa",
-    availability: "Open to data science and cloud roles",
+    availability: "Open to platform engineering and cloud roles",
     tagline:
-      "I build production data science on AWS: optimisation pipelines in Python, the Terraform infrastructure underneath them, and the CI/CD that ships them from development to production.",
+      "I design and operate production AWS platforms: multi-account infrastructure with Terraform, CI/CD pipelines that ship across environments, and the cloud backbone that keeps data science workloads running reliably.",
 
     // Contact links. Leave "" to hide a button.
     email: "", // e.g. "yourname@gmail.com"
@@ -101,15 +101,15 @@ window.PORTFOLIO = {
   },
 
   about: [
-    "I'm a data scientist at BMW IT Hub South Africa in Pretoria, where I own a multi-step AWS pipeline that solves mixed-integer linear programming (MILP) models. I joined BMW IT Hub as a data science graduate in 2024 and spent nearly two years on the DevOps and AWS side, so I don't stop at the model: I also build the Terraform infrastructure, CI/CD pipelines and multi-account AWS setup that keep it running in production.",
-    "My foundation is mathematical, with a BSc in Applied Mathematics and Mathematical Statistics from Rhodes University. I also spent a year and a half as an instructional specialist on 2U's data analytics and machine learning boot camps, mentoring students and grading their work in Python, machine learning, deep learning and Tableau.",
+    "I'm a platform engineer at BMW IT Hub South Africa in Pretoria, where I design and operate the AWS infrastructure behind a multi-step pipeline that solves mixed-integer linear programming (MILP) models. I joined BMW IT Hub as a junior data scientist in 2024 and quickly moved into DevOps and cloud engineering, building the Terraform infrastructure, CI/CD pipelines and multi-account AWS setup that keep production workloads running reliably.",
+    "My foundation is mathematical, with a BSc in Applied Mathematics and Mathematical Statistics from Rhodes University. That background lets me bridge the gap between data science teams and the platforms they depend on. I also spent a year and a half as an instructional specialist on 2U's data analytics and machine learning boot camps, mentoring students and grading their work in Python, machine learning, deep learning and Tableau.",
   ],
 
   // Shown next to the About text.
   facts: [
     { label: "Based in", value: "Pretoria, South Africa" },
     { label: "Currently", value: "Platform Engineer, BMW IT Hub South Africa" },
-    { label: "Focus", value: "Optimisation, cloud data pipelines, MLOps" },
+    { label: "Focus", value: "Cloud infrastructure, CI/CD, IaC, platform reliability" },
     { label: "Degree", value: "BSc Applied Mathematics & Mathematical Statistics" },
     { label: "Main tools", value: "Python, AWS, Terraform, Docker" },
   ],
