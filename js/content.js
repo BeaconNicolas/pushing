@@ -12,7 +12,7 @@ window.PORTFOLIO = {
   profile: {
     name: "Beacon Nicolas Mkhabele",
     initials: "BM",
-    role: "Data Scientist · BMW IT Hub South Africa",
+    role: "Platform Engineer · BMW IT Hub South Africa",
     location: "Pretoria, Gauteng, South Africa",
     availability: "Open to data science and cloud roles",
     tagline:
@@ -32,7 +32,7 @@ window.PORTFOLIO = {
 
   // Three quick numbers shown under the intro.
   stats: [
-    { value: "~3 yrs", label: "at BMW IT Hub, from graduate consultant to data scientist" },
+    { value: "~3 yrs", label: "at BMW IT Hub, from junior data scientist to platform engineer" },
     { value: "1.5 yrs", label: "teaching machine learning and data analytics at 2U" },
     { value: "AWS", label: "Certified Cloud Practitioner" },
   ],
@@ -108,7 +108,7 @@ window.PORTFOLIO = {
   // Shown next to the About text.
   facts: [
     { label: "Based in", value: "Pretoria, South Africa" },
-    { label: "Currently", value: "Data Scientist, BMW IT Hub South Africa" },
+    { label: "Currently", value: "Platform Engineer, BMW IT Hub South Africa" },
     { label: "Focus", value: "Optimisation, cloud data pipelines, MLOps" },
     { label: "Degree", value: "BSc Applied Mathematics & Mathematical Statistics" },
     { label: "Main tools", value: "Python, AWS, Terraform, Docker" },
@@ -171,7 +171,7 @@ window.PORTFOLIO = {
       ],
       roles: [
         {
-          title: "Data Scientist",
+          title: "Platform Engineer",
           period: "Oct 2026 – Present",
           points: [
             "Own and maintain the complex, multi-step AWS data science MILP (mixed-integer linear programming) pipeline for Bedarfs Kosmos.",
@@ -204,7 +204,7 @@ window.PORTFOLIO = {
           ],
         },
         {
-          title: "Data Science Graduate Consultant",
+          title: "Junior Data Scientist",
           period: "Jan 2024 – Jan 2025",
           points: [
             "Automated Excel workflows with Python.",
