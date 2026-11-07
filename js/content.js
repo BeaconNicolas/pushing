@@ -34,7 +34,7 @@ window.PORTFOLIO = {
   stats: [
     { value: "~3 yrs", label: "at BMW IT Hub, from junior data scientist to platform engineer" },
     { value: "1.5 yrs", label: "teaching machine learning and data analytics at 2U" },
-    { value: "AWS", label: "Certified Cloud Practitioner" },
+    { value: "2×", label: "certified: AWS Cloud Practitioner and HashiCorp Terraform Associate" },
   ],
 
   // "At a glance" tile in the Selected work grid. Numbers count up when shown.
@@ -536,9 +536,21 @@ window.PORTFOLIO = {
     },
   ],
 
+  // Certifications with a `badge` image are shown as badges in the intro and at the top of this list.
+  // Paste your Credly (or other) verification link into `verifyUrl` to add a "Verify" link.
   certifications: [
-    { title: "AWS Certified Cloud Practitioner", org: "Amazon Web Services" },
-    { title: "HashiCorp Certified: Terraform Associate (003)", org: "HashiCorp" },
+    {
+      title: "AWS Certified Cloud Practitioner",
+      org: "Amazon Web Services",
+      badge: "assets/badges/aws-cloud-practitioner.png",
+      verifyUrl: "",
+    },
+    {
+      title: "HashiCorp Certified: Terraform Associate (003)",
+      org: "HashiCorp",
+      badge: "assets/badges/terraform-associate-003.png",
+      verifyUrl: "",
+    },
     {
       title: "Data and AI Master's Program",
       org: "Deviare",

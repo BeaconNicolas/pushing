@@ -2275,6 +2275,119 @@ ul.points li::before {
   font-size: 14px;
 }
 
+/* ---------- Certification badges ---------- */
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.hero-badges-label {
+  color: var(--muted);
+  font: 500 12px/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-badge {
+  display: block;
+  border-radius: 10px;
+  transition: transform 0.2s var(--ease);
+}
+
+.hero-badge:hover {
+  transform: translateY(-2px);
+}
+
+.hero-badge img {
+  display: block;
+  width: auto;
+  height: 54px;
+  filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.18));
+}
+
+.cert-badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.cert-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 24px 16px 20px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.cert-badge img {
+  display: block;
+  width: auto;
+  height: 116px;
+  filter: drop-shadow(0 8px 18px rgba(15, 23, 42, 0.2));
+  transition: transform 0.25s var(--ease);
+}
+
+.cert-badge:hover img {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.cert-badge figcaption {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+.cert-badge .cert-title {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.cert-verify {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--emerald) 10%, transparent);
+  color: var(--emerald);
+  font: 500 12px/1.5 var(--font-mono);
+  text-decoration: none;
+}
+
+.cert-verify:hover {
+  background: color-mix(in srgb, var(--emerald) 16%, transparent);
+}
+
+@media (max-width: 420px) {
+  .cert-badges {
+    gap: 10px;
+  }
+  .cert-badge {
+    padding: 18px 10px 16px;
+  }
+  .cert-badge img {
+    height: 92px;
+  }
+  .cert-badge .cert-title {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge,
+  .cert-badge img {
+    transition: none;
+  }
+}
+
 /* ==========================================================
    Contact + footer
    ========================================================== */

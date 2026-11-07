@@ -934,7 +934,51 @@
   });
 
   var certs = target("certifications");
+  var certBadges = target("cert-badges");
+  var heroBadges = target("hero-badges");
+  var badged = (data.certifications || []).filter(function (c) { return c.badge; });
+
+  function verifyLink(c, className) {
+    if (!c.verifyUrl || !/^https:\/\//i.test(c.verifyUrl)) return null;
+    return el("a", {
+      className: className,
+      href: c.verifyUrl,
+      target: "_blank",
+      rel: "noopener",
+      "aria-label": "Verify " + c.title + " (opens in a new tab)",
+    }, [icon("badge-check", 14), document.createTextNode("Verify")]);
+  }
+
+  // Large badge cards at the top of the certifications column.
+  badged.forEach(function (c) {
+    certBadges.appendChild(
+      el("figure", { className: "cert-badge glass" }, [
+        el("img", { src: c.badge, alt: c.title + " badge", loading: "lazy", decoding: "async" }),
+        el("figcaption", null, [
+          el("span", { className: "cert-title", text: c.title }),
+          c.org ? el("span", { className: "cert-meta", text: c.org }) : null,
+          verifyLink(c, "cert-verify"),
+        ]),
+      ])
+    );
+  });
+  certBadges.hidden = !badged.length;
+
+  // Compact badges in the intro, linking to the full list (or the verification page).
+  if (badged.length) {
+    heroBadges.appendChild(el("span", { className: "hero-badges-label", text: "Certified" }));
+    badged.forEach(function (c) {
+      var href = c.verifyUrl && /^https:\/\//i.test(c.verifyUrl) ? c.verifyUrl : "#education";
+      var external = href !== "#education";
+      var attrs = { className: "hero-badge", href: href, title: c.title, "aria-label": c.title + (external ? " (verify, opens in a new tab)" : "") };
+      if (external) { attrs.target = "_blank"; attrs.rel = "noopener"; }
+      heroBadges.appendChild(el("a", attrs, [el("img", { src: c.badge, alt: "", decoding: "async" })]));
+    });
+    heroBadges.hidden = false;
+  }
+
   (data.certifications || []).forEach(function (c) {
+    if (c.badge) return; // shown as a badge card above
     var meta = [c.org, c.year].filter(Boolean).join(" · ");
     certs.appendChild(
       el("li", null, [
