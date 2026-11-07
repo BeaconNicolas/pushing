@@ -538,6 +538,7 @@ window.PORTFOLIO = {
 
   certifications: [
     { title: "AWS Certified Cloud Practitioner", org: "Amazon Web Services" },
+    { title: "HashiCorp Certified: Terraform Associate (003)", org: "HashiCorp" },
     {
       title: "Data and AI Master's Program",
       org: "Deviare",
