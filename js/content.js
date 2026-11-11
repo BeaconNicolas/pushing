@@ -32,7 +32,7 @@ window.PORTFOLIO = {
 
   // Three quick numbers shown under the intro.
   stats: [
-    { value: "~3 yrs", label: "at BMW IT Hub, from junior data scientist to platform engineer" },
+    { value: "~3 yrs", label: "at BMW IT Hub, from junior DevOps consultant to platform engineer" },
     { value: "1.5 yrs", label: "teaching machine learning and data analytics at 2U" },
     { value: "2×", label: "certified: AWS Cloud Practitioner and HashiCorp Terraform Associate" },
   ],
@@ -101,7 +101,7 @@ window.PORTFOLIO = {
   },
 
   about: [
-    "I'm a platform engineer at BMW IT Hub South Africa in Pretoria, where I design and operate the AWS infrastructure behind a multi-step pipeline that solves mixed-integer linear programming (MILP) models. I joined BMW IT Hub as a junior data scientist in 2024 and quickly moved into DevOps and cloud engineering, building the Terraform infrastructure, CI/CD pipelines and multi-account AWS setup that keep production workloads running reliably.",
+    "I'm a platform engineer at BMW IT Hub South Africa in Pretoria, where I design and operate the AWS infrastructure behind a multi-step pipeline that solves mixed-integer linear programming (MILP) models. I joined BMW IT Hub in 2024 as a junior DevOps consultant, working alongside data science, and grew into cloud and platform engineering, building the Terraform infrastructure, CI/CD pipelines and multi-account AWS setup that keep production workloads running reliably.",
     "My foundation is mathematical, with a BSc in Applied Mathematics and Mathematical Statistics from Rhodes University. That background lets me bridge the gap between data science teams and the platforms they depend on. I also spent a year and a half as an instructional specialist on 2U's data analytics and machine learning boot camps, mentoring students and grading their work in Python, machine learning, deep learning and Tableau.",
   ],
 
@@ -204,12 +204,15 @@ window.PORTFOLIO = {
           ],
         },
         {
-          title: "Junior Data Scientist",
+          title: "Junior DevOps Consultant",
           period: "Jan 2024 – Jan 2025",
           points: [
-            "Automated Excel workflows with Python.",
-            "Cleaned, transformed and compared data.",
-            "Gained hands-on AWS cloud experience and took part in hackathons.",
+            "Contributed to setting up a CI/CD pipeline alongside data science work, taking code from commit to deployment.",
+            "Adopted Terraform to define AWS infrastructure as code.",
+            "Adopted Git for version control across Python and Terraform code, using branches and pull requests.",
+            "Gained hands-on AWS experience and competed in hackathons.",
+            "Validated data quality by cleaning, transforming and comparing datasets, catching mismatches early.",
+            "Automated manual Excel workflows with Python, replacing repetitive steps with reliable, repeatable scripts.",
           ],
         },
       ],
